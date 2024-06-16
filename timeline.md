@@ -7,7 +7,7 @@
 
         yarn clean 
 
-         yarn --pure-lockfile && \
+        yarn --pure-lockfile && \
         yarn build:extensions && \
         yarn download:plugins && \ // ignore this step no plugin support 
         yarn browser build

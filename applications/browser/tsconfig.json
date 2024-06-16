@@ -10,6 +10,18 @@
       },
       {
         "path": "../../theia-extensions/product"
-      }
+      },
+      {
+        "path": "../../extensions/echo"
+      },
+      {
+        "path": "../../extensions/folder-view"
+      },
+      {
+        "path": "../../extensions/folder-service"
+      },
+      {
+        "path": "../../extensions/file_classify"
+      }  
     ]
 }

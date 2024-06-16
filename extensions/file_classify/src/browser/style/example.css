@@ -1,0 +1,12 @@
+.fa-file-text-o:before{
+    text-align: center;
+    margin-right: 4px;
+    color: rgb(27, 99, 162);
+}
+
+.fa-cubes:before{
+    
+    text-align: center;
+    margin-right: 4px;
+    color: rgba(173, 69, 13, 0.872);
+}
