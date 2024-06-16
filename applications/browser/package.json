@@ -21,12 +21,23 @@
   "theia": {
     "frontend": {
       "config": {
-        "applicationName": "Theia IDE",
+        "applicationName": "ixCode🔨",
         "warnOnPotentiallyInsecureHostPattern": false,
         "preferences": {
           "toolbar.showToolbar": true,
           "files.enableTrash": false,
-          "security.workspace.trust.enabled": false
+          "security.workspace.trust.enabled": false,
+
+          "workbench.colorTheme": "Visual Studio Light",
+          "java.autobuild.enabled": false,
+          "php.suggest.basic": false,
+          "php.validate.enable": false,
+          "maven.dependency.enableConflictDiagnostics": false,
+          "maven.executable.preferMavenWrapper": false,
+          "maven.showInExplorerContextMenu": false,
+          "npm.fetchOnlinePackageInfo": false,
+          "npm.scriptHover": false,
+          "redhat.telemetry.enabled": false
         }
       }
     },
@@ -44,6 +55,33 @@
     }
   },
   "dependencies": {
+    "@theia/core": "1.50.1",
+    "@theia/filesystem": "1.50.1", 
+    "@theia/navigator": "1.50.1",
+   
+    "@theia/editor": "1.50.1",
+    "@theia/editor-preview": "1.50.1", 
+    "@theia/messages": "1.50.1",
+    "@theia/mini-browser": "1.50.1",
+    "fs-extra": "^9.0.1", 
+
+    "@theia/toolbar": "1.50.1",
+    "@theia/getting-started": "1.50.1", 
+
+    "code-server-folder-service-ext":  "0.0.0",
+    "code-server-file_classify-ext": "0.0.0",
+
+    "theia-ide-echo-ext": "0.0.0",
+    "theia-ide-folderview-ext":  "0.0.0",
+    "theia-ide-folderservice-ext":  "0.0.0"
+   
+  },
+  
+  "temp-link":{
+    "theia-ide-product-ext": "1.50.100"
+  },
+
+  "keep_dependencies": {
     "@theia/bulk-edit": "1.50.1",
     "@theia/callhierarchy": "1.50.1",
     "@theia/console": "1.50.1",
@@ -85,16 +123,9 @@
     "@theia/variable-resolver": "1.50.1",
     "@theia/vsx-registry": "1.50.1",
     "@theia/workspace": "1.50.1",
-    "fs-extra": "^9.0.1",
-    "theia-ide-product-ext": "1.50.100",
-
-
-    "theia-ide-echo-ext": "0.0.0",
-    "theia-ide-folderview-ext":  "0.0.0",
-    "theia-ide-folderservice-ext":  "0.0.0", 
-    "code-server-file_classify-ext": "0.0.0"
-    
+    "fs-extra": "^9.0.1"  
   },
+
   "devDependencies": {
     "@theia/cli": "1.50.1"
   },
