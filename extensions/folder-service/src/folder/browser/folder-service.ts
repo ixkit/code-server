@@ -1,10 +1,12 @@
-
+import URI from '@theia/core/lib/common/uri';
 import { Endpoint } from '@theia/core/lib/browser';
 import { injectable, inject } from '@theia/core/shared/inversify';
 import { ILogger} from '@theia/core/lib/common';
-import { EditorManager } from '@theia/editor/lib/browser';
+import { EditorManager,EditorOpenerOptions } from '@theia/editor/lib/browser';
  
-
+export interface TargetFileOption extends EditorOpenerOptions {
+    uri : URI; 
+}
 @injectable()
 export class FolderService {
       
@@ -18,10 +20,41 @@ export class FolderService {
         return Promise.resolve(true);
      }
 
-    openFile(): boolean { 
+    onLoadWorkspace(): boolean { 
         this.logger.debug('🧐 openFile',this);
+        this.openTargetFileIfNeeds();
         return true;
-     }
+    }
+
+    openTargetFileIfNeeds(): boolean { 
+        const targetFile = this.getLocateTargetFile();
+        this.editorManager.open(targetFile.uri,targetFile);
+        return true;
+    } 
+    handleIntent(){
+        
+    }
+    //"Users/icoco/WorkSpace/zanvil_page/__manifest__.py"
+    getLocateTargetFile():TargetFileOption{
+        const uri = URI.fromFilePath("Users/icoco/WorkSpace/zanvil_page/data/defaults.xml");
+        const preview = true;
+        const options:TargetFileOption  = {
+            uri:uri,
+            selection: {
+                start: {
+                    line: 4,
+                    character:3
+                },
+                end: {
+                    line: 5,
+                    character:3
+                },
+            },
+            mode: preview ? 'reveal' : 'activate',
+            preview,
+        };
+       return options
+    }
      
      ///---- below is discard ------------------------------------
 

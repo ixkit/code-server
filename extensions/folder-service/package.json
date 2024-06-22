@@ -26,7 +26,8 @@
     "@theia/file-search": "1.50.1",
     "@theia/filesystem": "1.50.1",
     "@theia/workspace": "1.50.1",
-    "@theia/editor": "1.50.1"
+    "@theia/editor": "1.50.1", 
+    "@theia/variable-resolver": "1.50.1"
   },
   "devDependencies": {
     "rimraf": "^2.7.1",

@@ -1,5 +1,3 @@
-
-
 import { FrontendApplication, FrontendApplicationContribution } from '@theia/core/lib/browser';
 import { ILogger, MaybePromise } from '@theia/core/lib/common';
 //import { nls } from '@theia/core/lib/common/nls';
@@ -7,6 +5,7 @@ import { inject, injectable } from '@theia/core/shared/inversify';
 import { WorkspaceService } from '@theia/workspace/lib/browser';
 import {EditorManager } from '@theia/editor/lib/browser';
 import { FolderService } from './folder-service';
+import { EditorValService } from './editor-val-service';
 
 function updatePath(){
     const nextURL = 'http://127.0.0.1:3000/page_b';
@@ -32,12 +31,16 @@ export class FolderCommandContribution implements FrontendApplicationContributio
 
     @inject(FolderService) private readonly folderService: FolderService;
 
+    @inject(EditorValService) private readonly editorValService: EditorValService;
+
+
     onStart(app: FrontendApplication): MaybePromise<void> {
        // this.folderService.logger = this.logger;
         this.workspaceService.onWorkspaceChanged((x) => {
             this.logger.debug('🔃 onWorkspaceChanged', x );
             if (1>10){
                 updatePath();
+              //  this.editorValService.do();
             }
             //this.folderService.openFile(this.editorManager);
          
@@ -45,7 +48,9 @@ export class FolderCommandContribution implements FrontendApplicationContributio
         if (1>0){
             this.logger.debug('🧐 try checkPremission', this );
             this.folderService.checkPremission();
-            this.folderService.openFile();
+            this.folderService.onLoadWorkspace();
+
+            this.editorValService.do();
         }
         this.logger.info('FolderCommandContribution 🚀');
 
