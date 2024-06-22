@@ -125,3 +125,85 @@
             } 
         }
     ```
+
+#2024-6-16 
+    #kn 
+        ```
+            /**
+            * Trigger the open workspace command.
+            */
+            protected doOpenWorkspace = () => this.commandRegistry.executeCommand(WorkspaceCommands.OPEN_WORKSPACE.id);
+            protected doOpenWorkspaceEnter = (e: React.KeyboardEvent) => {
+                if (this.isEnterKey(e)) {
+                    this.doOpenWorkspace();
+                }
+            };
+        ```
+    // theia-master/packages/workspace/src/browser/workspace-frontend-contribution.ts
+    ```
+        if (targetFolders) {
+            const openableUri = await this.getOpenableWorkspaceUri(targetFolders);
+            if (openableUri) {
+                if (!this.workspaceService.workspace || !openableUri.isEqual(this.workspaceService.workspace.resource)) {
+                    this.workspaceService.open(openableUri);
+                    return openableUri;
+                }
+            };
+        }
+
+    ```
+
+#2024-6-16 
+    #remark     
+    workspace workflow:
+    doInit() -> getDefaultWorkspaceUri() -->
+
+    --> doOpen() 
+
+    await this.server.setMostRecentlyUsedWorkspace(uri.toString());
+
+
+        #file: theia-master/packages/workspace/src/browser/workspace-service.ts
+        
+             method: doGetDefaultWorkspaceUri
+
+            protected updateTitle(): void  
+
+    --> theia-master/packages/workspace/src/node/default-workspace-server.ts
+        async setMostRecentlyUsedWorkspace(rawUri: string)
+
+
+       
+
+
+    #open file in tab:
+    #file: theia/packages/editor/src/browser/editor-navigation-contribution.ts
+        protected async restoreClosedEditors(): Promise<void> 
+
+        ...
+        registerCommands(commands: CommandRegistry): void {
+        commands.registerCommand(EditorCommands.SHOW_ALL_OPENED_EDITORS, {
+            execute: () => this.quickInputService?.open('edt ')
+        });
+        const splitHandlerFactory = (splitMode: DockLayout.InsertMode): CommandHandler => new CurrentWidgetCommandAdapter(this.shell, {
+            isEnabled: title => title?.owner instanceof EditorWidget,
+            execute: async title => {
+                if (title?.owner instanceof EditorWidget) {
+                    const selection = title.owner.editor.selection;
+                    const newEditor = await this.editorManager.openToSide(title.owner.editor.uri, { selection, widgetOptions: { mode: splitMode, ref: title.owner } });
+                    const oldEditorState = title.owner.editor.storeViewState();
+                    newEditor.editor.restoreViewState(oldEditorState);
+                }
+            }
+        });
+        ...
+
+    #file: packages/editor/src/browser/editor-command.ts
+         registry.registerCommand(EditorCommands.REOPEN_CLOSED_EDITOR);
+    
+    #file: packages/editor/src/browser/editor-manager.ts
+
+
+    #file: packages/editor/src/browser/navigation/navigation-location-service.ts
+
+    register(...locations: NavigationLocation[]): void {

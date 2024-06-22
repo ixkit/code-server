@@ -9,7 +9,7 @@ import { Message } from '@theia/core/lib/browser';
 export class FolderApiWidget extends ReactWidget {
 
     static readonly ID = 'folder-api:widget';
-    static readonly LABEL = 'FolderApi Widget';
+    static readonly LABEL = 'FolderApi Widget 🧩';
 
     @inject(MessageService)
     protected readonly messageService!: MessageService;
