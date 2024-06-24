@@ -1,3 +1,34 @@
+## Code Server ☁️🔨
+  #### install  
+```
+  nvm use  v18.20.2
+```
+  #### build & start 
+``` 
+  yarn clean 
+
+   
+  yarn build:extensions  
+   
+  yarn browser build
+
+  yarn browser start   
+
+  yarn browser start    /my-workspace --hostname 0.0.0.0 --port 8080
+
+ 
+```
+### build executeable application
+  #### install pkg
+```
+   npm install -g pkg  
+```
+  #### pkg => build exe 
+```
+  npm run pkg
+```
+### Eclipse Theia IDE Template
+<details>
 <br/>
 <div id="theia-logo" align="center">
     <br />
@@ -147,3 +178,5 @@ docker run -p=3000:3000 --rm theia-ide
 ```
 
 and connect to <http://localhost:3000/>
+
+</details>
