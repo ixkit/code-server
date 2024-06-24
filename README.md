@@ -15,9 +15,21 @@
   yarn browser start   
 
   yarn browser start    /my-workspace --hostname 0.0.0.0 --port 8080
-
  
 ```
+  while code server lauched, open browser naviaget to address:   
+    http://127.0.0.1:8080/folder?dir={}&file={}&line=1
+
+  paramters:
+  - dir: the folder path, eg:  /a/b/c
+
+  - file: the file want open, eg:  index.html
+
+  - line: the line number that want locate to, eg: 1 
+
+  example:  
+  http://127.0.0.1:8080/folder?dir=/a/b/c&file=index.html&line=1
+    
 ### build executeable application
   #### install pkg
 ```
