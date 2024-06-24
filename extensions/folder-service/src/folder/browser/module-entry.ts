@@ -1,0 +1,21 @@
+
+import { ContainerModule } from '@theia/core/shared/inversify';
+import { FrontendApplicationContribution } from '@theia/core/lib/browser';
+import { FolderServiceContribution } from './folder-service-contribution';
+import { FolderService } from './folder-service'; 
+import { EditorValService } from './editor-val-service';
+import { EditorVariableContribution } from './editor-val-contribution';
+import { HookWorkspaceService } from './hook-workspace-service';
+//import { WindowService } from '@theia/core/lib/browser/window/window-service';
+//import { HookWindowService } from './hook-window-service';
+
+export default new ContainerModule(bind => {
+    bind(FrontendApplicationContribution).to(FolderServiceContribution);
+    bind(FolderService).toSelf().inSingletonScope();
+
+    bind(EditorValService).toSelf().inSingletonScope();
+    bind(FrontendApplicationContribution).to(EditorVariableContribution);
+
+  //  bind(WindowService).to(HookWindowService).inSingletonScope();
+    bind(HookWorkspaceService).toSelf().inSingletonScope();
+});

@@ -19,15 +19,17 @@
   ],
   "dependencies": {
     "@theia/core": "1.50.1",
-    "@vscode/sudo-prompt": "9.3.1",
-    "body-parser": "^1.17.2",
-    "fs-extra": "^4.0.2",
-
+    "@theia/editor": "1.50.1",
     "@theia/file-search": "1.50.1",
     "@theia/filesystem": "1.50.1",
+    "@theia/variable-resolver": "1.50.1",
     "@theia/workspace": "1.50.1",
-    "@theia/editor": "1.50.1", 
-    "@theia/variable-resolver": "1.50.1"
+    
+    "@vscode/sudo-prompt": "9.3.1",
+    "body-parser": "^1.17.2",
+    
+    "fs-extra": "^4.0.2" 
+    
   },
   "devDependencies": {
     "rimraf": "^2.7.1",
@@ -48,9 +50,13 @@
       "backend": "lib/launcher/node/launcher-backend-module"
     },
     {
-      "frontend": "lib/folder/browser/frontend-module", 
+      "frontend": "lib/folder/browser/module-entry",
       "backend": "lib/folder/node/backend-module"
+    },
+    {
+      "frontend": "lib/folder-bus/browser/module-entry",
+      "backend": "lib/folder-bus/node/module-entry"
     }
   ],
-  "keep":   {}
+  "keep": {}
 }

@@ -3,7 +3,8 @@
     #compile failed start, try below command
     
     ```
-        nvm use  v18.14.0
+        nvm use  v18.20.2
+        npm install -g pkg
 
         yarn clean 
 

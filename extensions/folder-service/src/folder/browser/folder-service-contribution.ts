@@ -1,16 +1,19 @@
 import { FrontendApplication, FrontendApplicationContribution } from '@theia/core/lib/browser';
 import { ILogger, MaybePromise } from '@theia/core/lib/common';
 //import { nls } from '@theia/core/lib/common/nls';
+import { FileStat } from '@theia/filesystem/lib/common/files';
 import { inject, injectable } from '@theia/core/shared/inversify';
 import { WorkspaceService } from '@theia/workspace/lib/browser';
 import {EditorManager } from '@theia/editor/lib/browser';
 import { FolderService } from './folder-service';
 import { EditorValService } from './editor-val-service';
+import { HookWorkspaceService } from './hook-workspace-service';
+import { FolderServiceLib } from '../../land';
 
-function updatePath(){
-    const nextURL = 'http://127.0.0.1:3000/page_b';
-    const nextTitle = 'My new page title';
-    const nextState = { additionalInformation: 'Updated the URL with JS' };
+function updatePath(path: string, title: string): void {
+    const nextURL =  window.location.origin + '/💡' + path;
+    const nextTitle = title;
+    const nextState = { additionalInformation: `${nextTitle}` };
 
     // This will create a new entry in the browser's history, without reloading
     window.history.pushState(nextState, nextTitle, nextURL);
@@ -19,10 +22,13 @@ function updatePath(){
     window.history.replaceState(nextState, nextTitle, nextURL);
 
 }
+
 @injectable()
-export class FolderCommandContribution implements FrontendApplicationContribution {
+export class FolderServiceContribution implements FrontendApplicationContribution {
 
     @inject(WorkspaceService) protected readonly workspaceService: WorkspaceService;
+
+    @inject(HookWorkspaceService) protected readonly hookWorkspaceService: HookWorkspaceService;
 
     @inject(EditorManager) protected editorManager: EditorManager;
 
@@ -32,31 +38,37 @@ export class FolderCommandContribution implements FrontendApplicationContributio
     @inject(FolderService) private readonly folderService: FolderService;
 
     @inject(EditorValService) private readonly editorValService: EditorValService;
-
+ 
 
     onStart(app: FrontendApplication): MaybePromise<void> {
-       // this.folderService.logger = this.logger;
+        this.logger.info('FolderServiceContribution 🚀');
+        
         this.workspaceService.onWorkspaceChanged((x) => {
             this.logger.debug('🔃 onWorkspaceChanged', x );
-            if (1>10){
-                updatePath();
-              //  this.editorValService.do();
-            }
-            //this.folderService.openFile(this.editorManager);
-         
-        });
-        if (1>0){
+            const activeFolder = x[0];
+            this.rebuildBrowserPath(activeFolder);
+
             this.logger.debug('🧐 try checkPremission', this );
             this.folderService.checkPremission();
-            this.folderService.onLoadWorkspace();
+            this.folderService.onLoadWorkspace(x);
+
 
             this.editorValService.do();
-        }
-        this.logger.info('FolderCommandContribution 🚀');
-
+        });
+        
         this.initService(app);
+        
     }
-
+    /*
+        do not display accurate full path
+    */
+    rebuildBrowserPath(activeFolder: FileStat){
+        if (FolderServiceLib.DEFAULT.trace){
+            return ;
+        }
+        const dir = activeFolder.resource.path.name; 
+        updatePath(dir,dir);
+    }
     initService(app: FrontendApplication){
         this.logger.info('🧐 initService, app? ',app);
     }
