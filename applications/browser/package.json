@@ -1,8 +1,8 @@
 {
   "private": true,
-  "name": "theia-ide-browser-app",
+  "name": "code-server-browser-app",
   "description": "Eclipse Theia IDE browser product",
-  "productName": "Theia IDE",
+  "productName": "Code Server",
   "version": "1.50.100",
   "license": "MIT",
   "author": "Eclipse Theia <theia-dev@eclipse.org>",
@@ -21,7 +21,7 @@
   "theia": {
     "frontend": {
       "config": {
-        "applicationName": "ixCode🔨",
+        "applicationName": "CodeServer☁️🔨",
         "warnOnPotentiallyInsecureHostPattern": false,
         "preferences": {
           "toolbar.showToolbar": true,

@@ -1,5 +1,5 @@
 {
-  "name": "theia-ide-code-server",
+  "name": "code-server",
   "private": true,
   "version": "1.50.100",
   "license": "MIT",
@@ -49,6 +49,7 @@
   "pkg-end": "--------------------------------------  end",
   "scripts": {
     "pkg": "pkg . ",
+    "pkgw": "pkg -t win . ",
 
     "clean": "lerna run clean && rimraf node_modules",
     "build": "yarn build:extensions && yarn build:applications",
