@@ -44,6 +44,9 @@
     "update:theia": "ts-node ../../scripts/update-theia-version.ts",
     "update:next": "ts-node ../../scripts/update-theia-version.ts next"
   },
+  "peerDependencies": {
+    "react": "^16.8.0"
+  },
   "theiaExtensions": [
     {
       "frontendElectron": "lib/launcher/browser/create-launcher-frontend-module",

@@ -1,3 +1,4 @@
+ 
 import { FrontendApplication, FrontendApplicationContribution } from '@theia/core/lib/browser';
 import { ILogger, MaybePromise } from '@theia/core/lib/common';
 //import { nls } from '@theia/core/lib/common/nls';
@@ -9,6 +10,8 @@ import { FolderService } from './folder-service';
 import { EditorValService } from './editor-val-service';
 import { HookWorkspaceService } from './hook-workspace-service';
 import { FolderServiceLib } from '../../land';
+import { FoldersDialog } from './folders-dialog';
+ 
 
 function updatePath(path: string, title: string): void {
     const nextURL =  window.location.origin + '/💡' + path;
@@ -40,6 +43,15 @@ export class FolderServiceContribution implements FrontendApplicationContributio
     @inject(EditorValService) private readonly editorValService: EditorValService;
  
 
+    constructor(
+   
+        @inject(FoldersDialog) protected readonly foldersDialog: FoldersDialog,
+       
+    ) { }
+    protected async openForders(): Promise<void> {
+        this.foldersDialog.open();
+    }
+
     onStart(app: FrontendApplication): MaybePromise<void> {
         this.logger.info('FolderServiceContribution 🚀');
         
@@ -53,7 +65,8 @@ export class FolderServiceContribution implements FrontendApplicationContributio
             this.folderService.onLoadWorkspace(x);
 
 
-            this.editorValService.do();
+            this.editorValService.do(); 
+    
         });
         
         this.initService(app);

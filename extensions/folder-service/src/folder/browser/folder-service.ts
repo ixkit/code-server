@@ -12,6 +12,8 @@ import { FolderIntent } from '../../land/types';
 
 import { FolderBusBackendService } from './../../folder-bus/common/protocol';
 
+
+
 export interface TargetFileOption extends EditorOpenerOptions {
     uri : URI; 
 }
@@ -28,7 +30,10 @@ export class FolderService {
     @inject(ILogger)
     protected readonly logger: ILogger;
 
+    
+ 
     async checkPremission(): Promise<boolean> {
+      
         return Promise.resolve(true);
      }
 

@@ -1,8 +1,12 @@
 import { injectable, inject } from '@theia/core/shared/inversify';
 import { Command, CommandContribution, CommandRegistry, MAIN_MENU_BAR, MenuContribution, MenuModelRegistry, MessageService } from '@theia/core/lib/common';
  
-// import { CommonMenus } from '@theia/core/lib/browser';
+// import { CommonMenus, open } from '@theia/core/lib/browser';
 import { CommonMenus } from '@theia/core/lib/browser';
+
+import { FoldersDialog } from 'code-server-folder-service-ext/lib/folder/browser/folders-dialog';
+//import { AboutDialog } from '@theia/core/browser';
+import { AboutDialog } from '@theia/core/lib/browser/about-dialog';
 
 export const EchoCommand: Command = {
     id: 'echo.command',
@@ -11,6 +15,9 @@ export const EchoCommand: Command = {
 
 @injectable()
 export class EchoCommandContribution implements CommandContribution {
+    
+    @inject(FoldersDialog) protected readonly foldersDialog: FoldersDialog;
+    @inject(AboutDialog) protected readonly aboutDialog: AboutDialog;
 
     constructor(
         @inject(MessageService) private readonly messageService: MessageService,
@@ -20,7 +27,9 @@ export class EchoCommandContribution implements CommandContribution {
         registry.registerCommand(EchoCommand, {
             execute: () =>{
                 this.messageService.info('Hello World!')
-               
+              //  this.foldersDialog.open();
+             // this.aboutDialog.open();
+              this.foldersDialog.open();
             }
         });
     }

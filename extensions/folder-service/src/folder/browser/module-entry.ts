@@ -1,4 +1,6 @@
 
+import '../../../src/folder/browser/style/index.css';
+
 import { ContainerModule } from '@theia/core/shared/inversify';
 import { FrontendApplicationContribution } from '@theia/core/lib/browser';
 import { FolderServiceContribution } from './folder-service-contribution';
@@ -8,7 +10,9 @@ import { EditorVariableContribution } from './editor-val-contribution';
 import { HookWorkspaceService } from './hook-workspace-service';
 //import { WindowService } from '@theia/core/lib/browser/window/window-service';
 //import { HookWindowService } from './hook-window-service';
-
+import { FoldersDialog,FoldersDialogProps } from './folders-dialog';
+ 
+ 
 export default new ContainerModule(bind => {
     bind(FrontendApplicationContribution).to(FolderServiceContribution);
     bind(FolderService).toSelf().inSingletonScope();
@@ -18,4 +22,10 @@ export default new ContainerModule(bind => {
 
   //  bind(WindowService).to(HookWindowService).inSingletonScope();
     bind(HookWorkspaceService).toSelf().inSingletonScope();
+ 
+    bind(FoldersDialog).toSelf().inSingletonScope();
+    bind(FoldersDialogProps).toConstantValue({ title: 'Folders' });
+     
 });
+ 
+
