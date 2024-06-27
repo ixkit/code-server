@@ -17,7 +17,7 @@
    width: 90%;
    text-overflow: ellipsis;
    overflow: hidden;
-   background-color: red;
+   /* background-color: red; */
  }
  .title-content-full{ 
    text-overflow: ellipsis;

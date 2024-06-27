@@ -28,8 +28,12 @@
     "@vscode/sudo-prompt": "9.3.1",
     "body-parser": "^1.17.2",
     
-    "fs-extra": "^4.0.2" 
-    
+    "fs-extra": "^4.0.2",
+
+    "react-viewport-list": "^7.1.2",
+    "react-json-to-table": "^0.1.7",
+    "react-tooltip": "^5.26.4",
+    "@kunukn/react-collapse": "^3.0.15"
   },
   "devDependencies": {
     "rimraf": "^2.7.1",
@@ -44,8 +48,16 @@
     "update:theia": "ts-node ../../scripts/update-theia-version.ts",
     "update:next": "ts-node ../../scripts/update-theia-version.ts next"
   },
+  "keepv":{
+    "react": "^16.8.0",
+    "react-json-to-table": "^0.1.7",
+    "react-router-dom": "^6.23.0",
+    "react-tooltip": "^5.26.4",
+    "react-viewport-list": "^7.1.2",
+    "react-tooltip2": "^4.2.21"
+  },
   "peerDependencies": {
-    "react": "^16.8.0"
+    "react": "^18.2.0"  
   },
   "theiaExtensions": [
     {

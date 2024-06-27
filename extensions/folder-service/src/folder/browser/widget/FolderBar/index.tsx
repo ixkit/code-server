@@ -1,5 +1,5 @@
 // Notice how you import it, changed since ver 3.
-//mport { Collapse } from '@kunukn/react-collapse'
+import { Collapse } from '@kunukn/react-collapse'
 import React  from 'react' 
  
 //import '../../../browser/widget/FolderBar/styles.css';
@@ -11,7 +11,7 @@ import { IRowItem } from '../Base/RowItem.js';
 
 //import { Tooltip, OverlayTrigger } from '../../bootstrap.js';
 //import TableView from 'react-table-view'
-//import { JsonToTable } from "react-json-to-table";
+import { JsonToTable } from "react-json-to-table";
 //import '../../../browser/style/json-table.css';
 
 const trimHolderInfo=(title: string)=>{ 
@@ -126,7 +126,7 @@ export const FolderBar =  (
         }
 
       </div> 
-      {/* <Collapse isOpen={isOpen} transition=" height 300ms cubic-bezier(0.4, 0, 0.2, 1)"> 
+      <Collapse isOpen={isOpen} transition=" height 300ms cubic-bezier(0.4, 0, 0.2, 1)"> 
         <div className='detail-card'>
           <div className='detail-card-content'>
             <p>
@@ -142,7 +142,7 @@ export const FolderBar =  (
           </div> 
           {children}
         </div> 
-      </Collapse>  */}
+      </Collapse> 
 
     </div>
   )

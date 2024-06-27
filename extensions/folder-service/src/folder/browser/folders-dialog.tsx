@@ -8,9 +8,9 @@ import { BaseDialog,BaseDialogProps, ABOUT_CONTENT_CLASS } from './base-dialog';
 import { injectable, inject } from '@theia/core/shared/inversify';
 import { renderDocumentation, renderDownloads, renderSourceCode, renderSupport, renderTickets, renderWhatIs } from './branding-util';
 
-import { FolderBar } from './widget/FolderBar';
+//import { FolderBar } from './widget/FolderBar';
 import { IRowItem } from './widget/Base/RowItem';
- 
+import { FolderList } from './widget/folders/FolderList'; 
 @injectable()
 export class FoldersDialogProps extends BaseDialogProps {
 }
@@ -36,14 +36,42 @@ export class FoldersDialog extends BaseDialog {
             {this.renderContent()}
         </div>;
     }
-    protected renderContent(): React.ReactNode {
-        const item: IRowItem = {
-            id : 'aa' , 
-            name: 'first',
-            path: 'xxx',
-            data: { }
+    private putItems(rowItem: IRowItem): IRowItem{
+        for (let index = 0; index < 10; index++) {
+            const item: IRowItem = {
+                id : 'sub' + index , 
+                name: 'sub' + index,
+                path: 'sub/path',
+                data: { 
+                    a:'sub-a', b:'sub-b'
+                }  
+            }
+            rowItem.items?.push(item); 
         }
-        const handlePickRow = ()=>{
+        return rowItem;
+    }
+    private getFolderList(): IRowItem[]{
+        const result  = [];
+        for (let index = 0; index < 10; index++) {
+            let item: IRowItem = {
+                id : 'p' + index , 
+                name: 'parent' + index,
+                path: 'parent/path',
+                data: { 
+                    a:'xxx', b:'yyy'
+                }  
+            }
+            item = this.putItems(item);
+            result.push(item); 
+        }
+        return result;
+    }
+    protected renderContent(): React.ReactNode { 
+
+        const folders = this.getFolderList();
+
+      
+        const onPickRow = ()=>{
 
         }
         return <div className='ad-container'> 
@@ -53,20 +81,26 @@ export class FoldersDialog extends BaseDialog {
                     {renderWhatIs(this.windowService)}
                 </div> */}
                 <div className='col'>
-                <FolderBar key={item.id} documentId={item.id} rowData= {item} onPickRow={handlePickRow} >
-                {/* <div >debug:{JSON.stringify(item.items)}</div>  */}
-                {/* { 
-                  item.items ? (
-                    <FolderList items={item.items} onPickRow={handlePickRow} isDoc={true}/>  
-                  ):(<></>)
-                } */}
-               
-              </FolderBar> 
-                </div>
+                <FolderList items={folders} onPickRow={onPickRow} isDoc={false} />
+                </div> 
             </div> 
         </div>;
 
     }
+    /*
+    private keep():  React.ReactNode{
+       return  <FolderBar key={item.id} documentId={item.id} rowData= {item} onPickRow={handlePickRow} >
+        <div >debug:{JSON.stringify(item.items)}</div>  
+       { 
+          item.items ? (
+            <FolderList items={item.items} onPickRow={handlePickRow} isDoc={true}/>  
+          ):(<></>)
+        }  
+       
+      </FolderBar> ;
+    }
+    */
+   
     protected _renderContent(): React.ReactNode {
         return <div className='ad-container'>
             <div className='ad-float'>

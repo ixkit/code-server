@@ -85,3 +85,5 @@ ul.theia-aboutDialog {
 
 @import './folder-bar.css';
 @import './json-table.css';
+
+@import './folders.css';
