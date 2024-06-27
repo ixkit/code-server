@@ -1,32 +1,22 @@
+import '../../../src/folder/browser/style/index.css';
 
 import * as React from 'react';
-import { AboutDialog, ABOUT_CONTENT_CLASS } from '@theia/core/lib/browser/about-dialog'; // AboutDialogProps,
- 
+//import { AboutDialog, ABOUT_CONTENT_CLASS } from '@theia/core/lib/browser/about-dialog'; // AboutDialogProps,
+import { BaseDialog,BaseDialogProps, ABOUT_CONTENT_CLASS } from './base-dialog'; // AboutDialogProps,
+
+
 import { injectable, inject } from '@theia/core/shared/inversify';
 import { renderDocumentation, renderDownloads, renderSourceCode, renderSupport, renderTickets, renderWhatIs } from './branding-util';
+
+import { FolderBar } from './widget/FolderBar';
+import { IRowItem } from './widget/Base/RowItem';
  
-//import { Dialog, DialogProps } from'@theia/core/lib/browser/dialog"
-import {  DialogProps } from'@theia/core/lib/browser/dialogs';
-
-/*
-import { TheiaDialog } from './theia-dialog';
-
-export class TheiaAboutDialog extends TheiaDialog {
-
-    override async isVisible(): Promise<boolean> {
-        const dialog = await this.page.$(`${this.blockSelector} .theia-aboutDialog`);
-        return !!dialog && dialog.isVisible();
-    }
-
-}
-
-*/
 @injectable()
-export class FoldersDialogProps extends DialogProps {
+export class FoldersDialogProps extends BaseDialogProps {
 }
 
 @injectable()
-export class FoldersDialog extends AboutDialog {
+export class FoldersDialog extends BaseDialog {
 
    
 
@@ -42,17 +32,47 @@ export class FoldersDialog extends AboutDialog {
     }
 
     protected render(): React.ReactNode {
-        return <div className={ABOUT_CONTENT_CLASS}>
+        return <div className={ABOUT_CONTENT_CLASS} >
             {this.renderContent()}
         </div>;
     }
-
     protected renderContent(): React.ReactNode {
+        const item: IRowItem = {
+            id : 'aa' , 
+            name: 'first',
+            path: 'xxx',
+            data: { }
+        }
+        const handlePickRow = ()=>{
+
+        }
+        return <div className='ad-container'> 
+            <hr className='gs-hr' />
+            <div className='flex-grid'>
+                {/* <div className='col'>
+                    {renderWhatIs(this.windowService)}
+                </div> */}
+                <div className='col'>
+                <FolderBar key={item.id} documentId={item.id} rowData= {item} onPickRow={handlePickRow} >
+                {/* <div >debug:{JSON.stringify(item.items)}</div>  */}
+                {/* { 
+                  item.items ? (
+                    <FolderList items={item.items} onPickRow={handlePickRow} isDoc={true}/>  
+                  ):(<></>)
+                } */}
+               
+              </FolderBar> 
+                </div>
+            </div> 
+        </div>;
+
+    }
+    protected _renderContent(): React.ReactNode {
         return <div className='ad-container'>
             <div className='ad-float'>
                 <div className='ad-logo'>
                 </div>
-                {this.renderExtensions()}
+             {/* //   {this.renderExtensions()} */}
             </div>
             {this.renderTitle()}
             <hr className='gs-hr' />
@@ -93,7 +113,7 @@ export class FoldersDialog extends AboutDialog {
     protected renderTitle(): React.ReactNode {
         return <div className='gs-header'>
             <h1>Folders <span className='gs-blue-header'>☕️</span></h1>
-            {this.renderVersion()}
+            {/* {this.renderVersion()} */}
         </div>;
     }
 

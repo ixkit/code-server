@@ -74,3 +74,14 @@ ul.theia-aboutExtensions {
     padding: 0;
     margin-left: 10px;
  }
+ 
+ /* .theia-aboutDialog {
+   
+} */
+
+ul.theia-aboutDialog {
+  min-height: 60%;
+}
+
+@import './folder-bar.css';
+@import './json-table.css';

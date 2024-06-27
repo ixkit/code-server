@@ -1,0 +1,12 @@
+export { SparklesSVG } from './SparklesSVG';
+export { StopSVG } from './StopSVG';
+export { EditSVG } from './EditSVG';
+export { NewSVG } from './NewSVG';
+export { GearSVG } from './GearSVG';
+export { CloseSVG } from './CloseSVG';
+export { TrashSVG } from './TrashSVG';
+export { BugSVG } from './BugSVG';
+export { FileSVG } from './FileSVG';
+export { DirectoryArrowSVG } from './DirectoryArrowSVG';
+export { PlaySVG } from './PlaySVG';
+export { QuestionMarkSVG } from './QuestionMarkSVG';

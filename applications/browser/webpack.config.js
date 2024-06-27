@@ -30,6 +30,8 @@ configs[0].plugins.push(
         ]
     })
 );
+//@@ by Robin 
+//configs[0].devtool = 'source-map'
 
 module.exports = [
     ...configs,

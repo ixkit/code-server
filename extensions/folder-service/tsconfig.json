@@ -4,7 +4,8 @@
     "rootDir": "src",
     "outDir": "lib",
     "baseUrl": ".",
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "jsx": "react-jsx"
   },
   "include": ["src"]
 }
