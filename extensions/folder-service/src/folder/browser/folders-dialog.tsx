@@ -2,7 +2,7 @@ import '../../../src/folder/browser/style/index.css';
 
 import * as React from 'react';
 //import { AboutDialog, ABOUT_CONTENT_CLASS } from '@theia/core/lib/browser/about-dialog'; // AboutDialogProps,
-import { BaseDialog,BaseDialogProps, ABOUT_CONTENT_CLASS } from './base-dialog'; // AboutDialogProps,
+import { BaseDialog,BaseDialogProps, BASE_DIALOG_CONTENT_CLASS } from './base-dialog'; // AboutDialogProps,
 
 
 import { injectable, inject } from '@theia/core/shared/inversify';
@@ -10,7 +10,7 @@ import { renderDocumentation, renderDownloads, renderSourceCode, renderSupport, 
 
 //import { FolderBar } from './widget/FolderBar';
 import { IRowItem } from './widget/Base/RowItem';
-import { FolderList } from './widget/folders/FolderList'; 
+import { FolderList }  from './widget/FolderList'; 
 @injectable()
 export class FoldersDialogProps extends BaseDialogProps {
 }
@@ -32,11 +32,12 @@ export class FoldersDialog extends BaseDialog {
     }
 
     protected render(): React.ReactNode {
-        return <div className={ABOUT_CONTENT_CLASS} >
+        return <div className={BASE_DIALOG_CONTENT_CLASS} >
             {this.renderContent()}
         </div>;
     }
     private putItems(rowItem: IRowItem): IRowItem{
+        const result  = [];
         for (let index = 0; index < 10; index++) {
             const item: IRowItem = {
                 id : 'sub' + index , 
@@ -46,8 +47,9 @@ export class FoldersDialog extends BaseDialog {
                     a:'sub-a', b:'sub-b'
                 }  
             }
-            rowItem.items?.push(item); 
+            result.push(item); 
         }
+        rowItem.items = result;
         return rowItem;
     }
     private getFolderList(): IRowItem[]{
@@ -71,8 +73,9 @@ export class FoldersDialog extends BaseDialog {
         const folders = this.getFolderList();
 
       
-        const onPickRow = ()=>{
-
+        const onPickRow = (row:IRowItem)=>{
+            console.debug('⚡️ onChoice',row);
+            this.close();
         }
         return <div className='ad-container'> 
             <hr className='gs-hr' />

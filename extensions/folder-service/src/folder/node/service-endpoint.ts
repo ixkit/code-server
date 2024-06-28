@@ -33,7 +33,8 @@ export class ServiceApiEndpoint implements BackendApplicationContribution {
     }
 
    deployServices(app: Application): void{
-    this.openHandler(app);
+    this.serveOpenFolderHandler(app);
+    this.serveFoldersHandler(app);
    }
 
    traceHandler(app: Application): void{
@@ -59,7 +60,7 @@ export class ServiceApiEndpoint implements BackendApplicationContribution {
         http://127.0.0.1:8080/folder?dirId={}&file={}line={}
 
     */
-   openHandler(app: Application): void{
+   serveOpenFolderHandler(app: Application): void{
         app.get('/folder', (req, res) => {
             console.debug(' ☎️ ', req);
             const dirPath = req.query['dir']; 
@@ -86,4 +87,55 @@ export class ServiceApiEndpoint implements BackendApplicationContribution {
             res.redirect(`/#${dir}`);
         });
     } 
+
+    /*
+    @purpose: set the folders that contains all avaiable documents(directory path)
+    @url:    http://localhost:3030/api/folders
+    */    
+    serveFoldersHandler(app: Application): void{
+
+        // const postFoldersApi = '/api/folders';
+        // app.post(postFoldersApi, (req, res) => { 
+                
+        //     const ts = Date.now();
+        //     let params = {
+        //         folders:[
+        //             {
+        //             parent_id: "xxx", // option 
+        //             name:"group-name" + ts,
+        //             path: "group-path" + ts,
+        //             data: {},
+        //             items:[ {
+        //                 name:"item-name" + ts,
+        //                 path: 'item-path' + ts,
+        //                 data:{}
+        //             }]
+        //             }
+        //         ] 
+        //     }
+        //     params = req.body;
+        //     if (!params){
+        //         return  echoError(res,{'error':"invlidate input"}) ;
+        //     } 
+        //     try{
+        //         let folders = params.folders;
+        //         // pack the id
+        //         fillDocId(folders,true);
+        //         for (let index = 0; index < folders.length; index++) {
+        //             const folder = folders[index];
+        //             if (folder.items){
+        //                 fillDocId(folder.items,true);
+        //             } 
+        //         }
+        //         var result = myShareDB.syncFolders(folders);
+                    
+        //         return echoSuccess(res,{success: true,data :result }); 
+            
+        //     }catch(ex){
+        //         myLogger.debug("Failed setup folders", ex);
+        //         return echoError(res,{'error':ex.toString()}) ;  
+        //     }
+        
+        //});
+    }
 }

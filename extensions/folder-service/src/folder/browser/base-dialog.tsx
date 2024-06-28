@@ -13,7 +13,7 @@ import { WindowService } from '@theia/core/lib/browser/window/window-service';
 import { Key, KeyCode } from '@theia/core/lib/browser/keys';
 import { nls } from '@theia/core/lib/common/nls';
 
-export const ABOUT_CONTENT_CLASS = 'theia-aboutDialog';
+export const BASE_DIALOG_CONTENT_CLASS =  'base-dialog';// 'theia-aboutDialog';
 export const ABOUT_EXTENSIONS_CLASS = 'theia-aboutExtensions';
 
 @injectable()
@@ -94,7 +94,7 @@ export class BaseDialog extends ReactDialog<void> {
     }
 
     protected render(): React.ReactNode {
-        return <div className={ABOUT_CONTENT_CLASS}>
+        return <div className={BASE_DIALOG_CONTENT_CLASS}>
             {this.renderHeader()}
             {this.renderExtensions()}
         </div>;

@@ -1,13 +1,14 @@
-// Notice how you import it, changed since ver 3.
-import { Collapse } from '@kunukn/react-collapse'
 import React  from 'react' 
- 
+import { Collapse } from '@kunukn/react-collapse'
+
 //import '../../../browser/widget/FolderBar/styles.css';
 
 import { DirectoryArrowSVG } from '../../../../land/icons/index.js';
 import { IRowItem } from '../Base/RowItem.js';
  
-// import { Tooltip } from 'react-tooltip'
+ 
+import OverlayTrigger from 'react-bootstrap/cjs/OverlayTrigger.js';
+import Tooltip from 'react-bootstrap/cjs/Tooltip.js';
 
 //import { Tooltip, OverlayTrigger } from '../../bootstrap.js';
 //import TableView from 'react-table-view'
@@ -33,9 +34,7 @@ export const FolderBar =  (
   const handlePickRow = React.useCallback(() => {
     onPickRow(rowData);
   }, [rowData, onPickRow]);
-  if (1>0){
-    handlePickRow();
-  }
+ 
   
    
   const myJson = {
@@ -104,8 +103,8 @@ export const FolderBar =  (
             // </div>
            
             <div className='selecte-box'   >
-              
-              {/* <OverlayTrigger
+             
+              <OverlayTrigger
                 placement="left"
                 overlay={
                   <Tooltip id="open-settings-tooltip">
@@ -119,7 +118,7 @@ export const FolderBar =  (
                 >
                 <span className='rightButton emoj-buttion'>✓</span> 
               </i>
-            </OverlayTrigger>  */}
+            </OverlayTrigger> 
             
           </div>
           ):null

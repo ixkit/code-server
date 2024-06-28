@@ -70,9 +70,9 @@
     "@theia/getting-started": "1.50.1", 
 
     "code-server-folder-service-ext":  "0.0.0",
-    "code-server-file_classify-ext": "0.0.0",
-
-    "theia-ide-echo-ext": "0.0.0",
+    "code-server-file_classify-ext": "0.0.0", 
+    "code-server-vest-ext": "0.0.0",
+    
     "theia-ide-folderview-ext":  "0.0.0" 
    
    

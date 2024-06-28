@@ -79,11 +79,12 @@ ul.theia-aboutExtensions {
    
 } */
 
-ul.theia-aboutDialog {
+ul.base-dialog {
   min-height: 60%;
+  max-width: 50%;
 }
 
 @import './folder-bar.css';
 @import './json-table.css';
 
-@import './folders.css';
+@import './folder-list.css';

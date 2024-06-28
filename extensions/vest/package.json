@@ -1,0 +1,30 @@
+{ 
+  "name":  "code-server-vest-ext",
+  "keywords": [
+    "theia-extension"
+  ],
+  "version": "0.0.0",
+  "files": [
+    "lib",
+    "src"
+  ],
+  "dependencies": {
+    "@theia/core": "1.50.1",
+    "code-server-folder-service-ext":  "0.0.0"
+  },
+  "devDependencies": {
+    "rimraf": "^2.7.1",
+    "typescript": "~4.5.5"
+  },
+  "scripts": {
+    "prepare": "yarn run clean && yarn run build",
+    "clean": "rimraf lib",
+    "build": "tsc",
+    "watch": "tsc -w"
+  },
+  "theiaExtensions": [
+    {
+      "frontend": "lib/browser/module-entry"
+    }
+  ]
+}
