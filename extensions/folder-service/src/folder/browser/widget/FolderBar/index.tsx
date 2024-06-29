@@ -31,7 +31,8 @@ export const FolderBar =  (
   
   
   
-  const handlePickRow = React.useCallback(() => {
+  const handlePickRow = React.useCallback((e: React.MouseEvent) => {
+    e?.stopPropagation();
     onPickRow(rowData);
   }, [rowData, onPickRow]);
  

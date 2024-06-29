@@ -1,7 +1,7 @@
  
 import { ContainerModule } from '@theia/core/shared/inversify'; 
 import { BackendApplicationContribution } from '@theia/core/lib/node/backend-application';
-import { ServiceApiEndpoint } from './service-endpoint';
+import { ServiceApiEndpoint } from './service-api-endpoint';
  
 export default new ContainerModule(bind => {
     bind(ServiceApiEndpoint).toSelf().inSingletonScope();

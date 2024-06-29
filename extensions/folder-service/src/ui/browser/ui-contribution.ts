@@ -26,7 +26,7 @@ export class FolderUICommandContribution implements CommandContribution {
         registry.registerCommand(FolderListCommand, {
             execute: () =>{
                 this.messageService.info('FolderListCommand!'); 
-              this.foldersDialog.open();
+              this.foldersDialog.openWith();
             }
         });
 

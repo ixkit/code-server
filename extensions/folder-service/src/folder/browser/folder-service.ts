@@ -4,6 +4,7 @@ import URI from '@theia/core/lib/common/uri';
 import { FileStat } from '@theia/filesystem/lib/common/files';
 import { hashValue } from '@theia/core/lib/common/uuid';
 import { Endpoint } from '@theia/core/lib/browser';
+import { RequestService, RequestContext } from '@theia/request';
 import { injectable, inject } from '@theia/core/shared/inversify';
 import { ILogger} from '@theia/core/lib/common';
 import { EditorManager,EditorOpenerOptions } from '@theia/editor/lib/browser';
@@ -11,11 +12,27 @@ import { Path } from '@theia/core/lib/common';
 import { FolderIntent } from '../../land/types';
 
 import { FolderBusBackendService } from './../../folder-bus/common/protocol';
+import { IRowItem } from './widget/Base/RowItem';
+
 
 
 
 export interface TargetFileOption extends EditorOpenerOptions {
     uri : URI; 
+}
+
+function toRouteUrl(route: string): string {
+    const point: Endpoint  = new Endpoint();
+    return  `${point.httpScheme}//${point.host}${route}`;
+}
+/*
+http://127.0.0.1:8080/folder?dir=/WorkSpace/zanvil_page&file=views/res_users.xml&line=1
+*/
+function folder2RouteUrl(folder: IRowItem): string{
+    const dir = folder.path;
+    const file = folder.files;
+    const path = `/folder?dir=${dir}&file=${file}`; 
+    return toRouteUrl(path);
 }
 
 
@@ -30,8 +47,19 @@ export class FolderService {
     @inject(ILogger)
     protected readonly logger: ILogger;
 
-    
- 
+    @inject(RequestService)
+    protected readonly requestService: RequestService;
+
+   
+    protected getFolderApiUrl(): string { 
+        //const url = new Endpoint({ path: '/api/folders' }).getRestUrl().toString();
+       
+       
+        const url = toRouteUrl("/api/folders");
+        this.logger.debug('🧐 getFolderApiUrl', url);
+        return url;
+    }
+
     async checkPremission(): Promise<boolean> {
       
         return Promise.resolve(true);
@@ -45,7 +73,21 @@ export class FolderService {
        
     }
  
+    async redirect(url: string): Promise<boolean> {
+        this.logger.debug('👉 redirect',url); 
+        window.location.href = url;
+        return Promise.resolve(true);
+    }
+    public async redirectByFolder(folder: IRowItem): Promise<boolean> { 
+        this.logger.debug('👉 redirectByFolder',folder); 
+        if (1>0){
+            folder.path ="/Users/icoco/WorkSpace/myodoo/intellau";
+            folder.files = "intellau_theme/README.rst";
+        } 
+        const url = folder2RouteUrl(folder);
 
+        return this.redirect(url);
+    }
     /*
         open doc folder then trigger render on web page
         eg: http://127.0.0.1:8080/folder?dir=/WorkSpace/zanvil_page&file=views/res_users.xml&line=1
@@ -140,30 +182,41 @@ export class FolderService {
         };
        return options
     }
-     
-     ///---- below is discard ------------------------------------
-
-    async isInitialized(): Promise<boolean> {
-        const response = await fetch(new Request(`${this.endpoint()}/initialized`), {
-            body: undefined,
-            method: 'GET'
-        }).then(r => r.json());
-        return !!response?.initialized;
+    
+    async fetchFolders(): Promise<IRowItem[]> { 
+        const response = await this.requestService.request({ url: this.getFolderApiUrl() });
+        if (1>0){
+             console.debug('🧐 fetchFolders',response);
+             const str = RequestContext.asText(response);
+             const r: DefaultResponseSchemaContribution.FolderList =  JSON.parse(str);
+             if (r && r.data){
+                return  Promise.resolve(r.data);
+             } 
+             Promise.resolve([]); 
+        }
+        const result = RequestContext.asJson<{ result: DefaultResponseSchemaContribution.FolderList }>(response).result;
+        if (result && result.data){
+            const r :IRowItem[] = result.data;
+            return  Promise.resolve(r);
+        }
+        return Promise.resolve([]); 
     }
 
-    async createLauncher(create: boolean): Promise<void> {
-        fetch(new Request(`${this.endpoint()}`), {
-            body: JSON.stringify({ create }),
-            method: 'PUT',
-            headers: new Headers({ 'Content-Type': 'application/json' })
-        });
+    
+
+
+}
+
+
+export namespace DefaultResponseSchemaContribution {
+    export interface Result<T> {
+        success: boolean;
+        data?: T;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        schema?: any;
     }
-
-    protected endpoint(): string {
-        const url = new Endpoint({ path: '/open' }).getRestUrl().toString();
-        return url.endsWith('/') ? url.slice(0, -1) : url;
+    export interface FolderList {
+        success: boolean;
+        data?: IRowItem[];
     }
-
-
-
 }

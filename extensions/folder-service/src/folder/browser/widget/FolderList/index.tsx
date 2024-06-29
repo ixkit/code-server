@@ -2,39 +2,37 @@
 import React from 'react' 
 import { useEffect,useState, useRef } from 'react';
 import { ViewportList } from 'react-viewport-list';
-
  
- 
-//import { getFolderList } from "../../api/apiClient.js"  
 
 import { FolderBar } from "../FolderBar/index";
 import { IRowItem } from "../Base/RowItem" 
+import { Reacts } from 'src/land';
+
+
 
 export  const FolderList = ({
   items,
   onPickRow,
-  isDoc,
+  observer
 }: {
   items: IRowItem[];
   onPickRow:(row:Object) => void;
-  isDoc: boolean;
+  observer?: Reacts.IObserver;
 }) => {
   const ref = useRef(null);
   const listRef = useRef(null); 
   const [dataSet, setDataSet] = useState<IRowItem[]>([]);
 
-  // const fetchFolders = async () => { 
-  //   const res : Response = await getFolderList();
-  //   const response = await res.json();
-  //   setDataSet(response.data);
-  // }
  
-    //invoke get folders api
-  useEffect(() => {  
-    console.log('🔥 useEffect->fetchFolders')  
-     
-      setDataSet(items);
-    
+  useEffect(() => {   
+    setDataSet(items);
+    if (observer){
+      observer.lisenter = {
+          update(sender, val) {
+            setDataSet(val);
+          }
+      }   
+    }
     return () => {};
   }, []);
  
@@ -74,12 +72,11 @@ export  const FolderList = ({
             // </div>
              
               <FolderBar key={item.id} documentId={item.id} rowData= {item} onPickRow={handlePickRow} >
-                <div >debug:{JSON.stringify(item.items)}</div> 
+                {/* <div >debug:{JSON.stringify(item.items)}</div>  */}
                 { 
                   item.items ? (
                     <div>
-                      items here 
-                      <FolderList items={item.items} onPickRow={handlePickRow} isDoc={true}/> 
+                      <FolderList items={item.items} onPickRow={handlePickRow}/> 
                     </div>
                     
                   ):(<div> no items </div>)

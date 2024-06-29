@@ -1,82 +1,82 @@
 import '../../../src/folder/browser/style/index.css';
 
 import * as React from 'react';
-//import { AboutDialog, ABOUT_CONTENT_CLASS } from '@theia/core/lib/browser/about-dialog'; // AboutDialogProps,
-import { BaseDialog,BaseDialogProps, BASE_DIALOG_CONTENT_CLASS } from './base-dialog'; // AboutDialogProps,
-
 
 import { injectable, inject } from '@theia/core/shared/inversify';
+import { BaseDialog,BaseDialogProps, BASE_DIALOG_CONTENT_CLASS } from './base-dialog';
+import { ConfirmDialog, Dialog } from '@theia/core/lib/browser';
+import { nls } from '@theia/core/lib/common/nls';
 import { renderDocumentation, renderDownloads, renderSourceCode, renderSupport, renderTickets, renderWhatIs } from './branding-util';
-
-//import { FolderBar } from './widget/FolderBar';
 import { IRowItem } from './widget/Base/RowItem';
 import { FolderList }  from './widget/FolderList'; 
+import { FolderService } from './folder-service';
+import { Message } from '@theia/core/lib/browser';
+import { Reacts } from 'src/land';
+
 @injectable()
 export class FoldersDialogProps extends BaseDialogProps {
 }
 
+let that:FoldersDialog;
+
 @injectable()
-export class FoldersDialog extends BaseDialog {
+export class FoldersDialog extends BaseDialog implements Reacts.IObserver {
+
+    
+    @inject(FolderService)
+    protected folderService: FolderService;
 
    
+    private folderList: IRowItem[] = [];
+ 
 
     constructor(
         @inject(FoldersDialogProps) protected readonly props: FoldersDialogProps
     ) {
         super(props);
+        that = this;
     }
+    lisenter: Reacts.IObserver;
 
     protected async doInit(): Promise<void> {
         
         super.doInit();
+        console.debug('🧐 doInit', this);
+        
+    }
+
+    public  openWith(){
+        this.reloadFolderList();
+        this.open();
+    }
+    protected override onAfterAttach(msg: Message): void {
+        super.onAfterAttach(msg);
+        console.debug('🧐 onAfterAttach', msg);
     }
 
     protected render(): React.ReactNode {
+    
         return <div className={BASE_DIALOG_CONTENT_CLASS} >
             {this.renderContent()}
         </div>;
     }
-    private putItems(rowItem: IRowItem): IRowItem{
-        const result  = [];
-        for (let index = 0; index < 10; index++) {
-            const item: IRowItem = {
-                id : 'sub' + index , 
-                name: 'sub' + index,
-                path: 'sub/path',
-                data: { 
-                    a:'sub-a', b:'sub-b'
-                }  
+ 
+    private reloadFolderList(): IRowItem[]{ 
+        this.folderService.fetchFolders().then(x=>{ 
+            // this.folderList = x;
+            if (this.lisenter){
+                this.lisenter.update(this,x);
             }
-            result.push(item); 
-        }
-        rowItem.items = result;
-        return rowItem;
+        }).catch(e=>{
+            console.error('🔥 failed fetch',e); 
+        }).finally(()=>{
+        // console.log('🧐 folderService.getFolders finish', this.folderList);
+        });
+        return []; 
     }
-    private getFolderList(): IRowItem[]{
-        const result  = [];
-        for (let index = 0; index < 10; index++) {
-            let item: IRowItem = {
-                id : 'p' + index , 
-                name: 'parent' + index,
-                path: 'parent/path',
-                data: { 
-                    a:'xxx', b:'yyy'
-                }  
-            }
-            item = this.putItems(item);
-            result.push(item); 
-        }
-        return result;
-    }
-    protected renderContent(): React.ReactNode { 
+  
 
-        const folders = this.getFolderList();
-
-      
-        const onPickRow = (row:IRowItem)=>{
-            console.debug('⚡️ onChoice',row);
-            this.close();
-        }
+    protected renderContent(): React.ReactNode {
         return <div className='ad-container'> 
             <hr className='gs-hr' />
             <div className='flex-grid'>
@@ -84,12 +84,41 @@ export class FoldersDialog extends BaseDialog {
                     {renderWhatIs(this.windowService)}
                 </div> */}
                 <div className='col'>
-                <FolderList items={folders} onPickRow={onPickRow} isDoc={false} />
+                   {this.renderFolderList()}
                 </div> 
             </div> 
-        </div>;
-
+        </div>; 
     }
+
+    protected async shouldOpenNewFolder(row:IRowItem): Promise<boolean> {
+        const dialog = new ConfirmDialog({
+            title: nls.localize('codeserver/openfolder', 'Confirm'),
+            msg: nls.localize('codeserver/openfolder/confirm/body',
+                'Do you want to open folder: {0} ? \r\n path: {1}', row.name, row.path),
+            ok: Dialog.YES,
+            cancel: Dialog.NO,
+        });
+        return !!await dialog.open();
+    }
+
+    private  async onPickRow(row: IRowItem): Promise<void> {  
+
+        const go = await that.shouldOpenNewFolder(row);
+        if (go){
+            that.folderService.redirectByFolder(row);
+            that.close();
+        }  
+    }
+    protected renderFolderList(): React.ReactNode {
+       
+        return <FolderList 
+            items={this.folderList} 
+            onPickRow={this.onPickRow} 
+            observer={this}
+            />;
+        
+    }
+    
     /*
     private keep():  React.ReactNode{
        return  <FolderBar key={item.id} documentId={item.id} rowData= {item} onPickRow={handlePickRow} >
@@ -166,3 +195,4 @@ export class FoldersDialog extends BaseDialog {
         </div>;
     }
 }
+ 
