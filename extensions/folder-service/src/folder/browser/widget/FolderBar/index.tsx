@@ -53,7 +53,7 @@ export const FolderBar =  (
   let docPath:string = ''; 
   let titleContentClass = 'title-content-short';
   if ( rowData){
-    if (!rowData.data){
+    if (!rowData.data && false){
        rowData.data = myJson;
     }
     
@@ -90,7 +90,7 @@ export const FolderBar =  (
           <DirectoryArrowSVG />
         </div>
        
-        <div className={titleContentClass}> AAA {title} </div>
+        <div className={titleContentClass}>{title}</div>
         {
           rowData && !rowData.items?
           (

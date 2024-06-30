@@ -1,9 +1,9 @@
  
-import { FrontendApplication, FrontendApplicationContribution } from '@theia/core/lib/browser';
+import { ApplicationShell, FrontendApplication, FrontendApplicationContribution } from '@theia/core/lib/browser';
 import { ILogger, MaybePromise } from '@theia/core/lib/common';
 //import { nls } from '@theia/core/lib/common/nls';
 import { FileStat } from '@theia/filesystem/lib/common/files';
-import { inject, injectable } from '@theia/core/shared/inversify';
+import { inject, injectable, interfaces } from '@theia/core/shared/inversify';
 import { WorkspaceService } from '@theia/workspace/lib/browser';
 import {EditorManager } from '@theia/editor/lib/browser';
 import { FolderService } from './folder-service';
@@ -11,10 +11,15 @@ import { EditorValService } from './editor-val-service';
 import { HookWorkspaceService } from './hook-workspace-service';
 import { FolderServiceLib } from '../../land';
 import { FoldersDialog } from './folders-dialog';
- 
+import { FolderToolbarService } from '../../ui/browser/folder-toolbar-service';
+import { LateInjector } from '@theia/toolbar/lib/browser/toolbar-interfaces';
+import { FolderToolbarWidgetFactory } from '../../ui/browser/folder-toolbar-widget';
+
+
+
 
 function updatePath(path: string, title: string): void {
-    const nextURL =  window.location.origin + '/💡' + path;
+    const nextURL =  window.location.origin + '/🔨' + path;
     const nextTitle = title;
     const nextState = { additionalInformation: `${nextTitle}` };
 
@@ -25,9 +30,12 @@ function updatePath(path: string, title: string): void {
     window.history.replaceState(nextState, nextTitle, nextURL);
 
 }
-
+ 
 @injectable()
-export class FolderServiceContribution implements FrontendApplicationContribution {
+export class FolderServiceAppContribution implements FrontendApplicationContribution {
+    @inject(LateInjector) protected lateInjector: <T>(id: interfaces.ServiceIdentifier<T>) => T;
+
+    @inject(FolderToolbarWidgetFactory) private readonly folderToolbarWidgetFactory: FolderToolbarWidgetFactory;
 
     @inject(WorkspaceService) protected readonly workspaceService: WorkspaceService;
 
@@ -42,20 +50,24 @@ export class FolderServiceContribution implements FrontendApplicationContributio
 
     @inject(EditorValService) private readonly editorValService: EditorValService;
  
-
-    constructor(
-   
+    @inject(ApplicationShell) protected readonly _shell: ApplicationShell;
+    
+    @inject(FolderToolbarService)
+    protected  folderToolbarService: FolderToolbarService;
+ 
+    constructor( 
         @inject(FoldersDialog) protected readonly foldersDialog: FoldersDialog,
        
     ) { }
+
     protected async openForders(): Promise<void> {
         this.foldersDialog.open();
     }
-
+     
     onStart(app: FrontendApplication): MaybePromise<void> {
         this.logger.info('FolderServiceContribution 🚀');
         
-        this.workspaceService.onWorkspaceChanged((x) => {
+        this.workspaceService.onWorkspaceChanged(async (x) => {
             this.logger.debug('🔃 onWorkspaceChanged', x );
             const activeFolder = x[0];
             this.rebuildBrowserPath(activeFolder);
@@ -66,11 +78,38 @@ export class FolderServiceContribution implements FrontendApplicationContributio
 
 
             this.editorValService.do(); 
-    
+
+           
+            
         });
         
         this.initService(app);
-        
+
+        // if (! this.folderToolbarService){
+        //     this.folderToolbarService = this.lateInjector(FolderToolbarService);
+          
+        // }
+       
+       
+    }
+    async initializeLayout(app: FrontendApplication):  Promise<void>{
+        this.logger.info('🧐 initializeLayout? ',this);
+
+        const folderToolbar = this.folderToolbarWidgetFactory('folder-toolbar');
+        await this._shell.addWidget(folderToolbar, {
+            area: 'main'
+        });
+        folderToolbar.update();
+       
+        await this.folderToolbarService.setupToolbar();
+    }
+
+    /**
+     * An event is emitted when a layout is initialized, but before the shell is attached.
+     */
+    onDidInitializeLayout?(app: FrontendApplication): MaybePromise<void>{
+        this.logger.info('🧐 onDidInitializeLayout? ',this);
+        //this.folderToolbarService.setupToolbar();
     }
     /*
         do not display accurate full path
@@ -111,3 +150,4 @@ export class FolderServiceContribution implements FrontendApplicationContributio
         // });
     }
 }
+ 

@@ -41,7 +41,7 @@
     }
 
     .json-to-table table {
-        font-size: medium;
+        /* font-size: medium; */
         width: 100%;
         border-collapse: collapse;
         font-family: sans-serif;

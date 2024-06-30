@@ -1,37 +1,47 @@
 import { injectable, inject } from '@theia/core/shared/inversify';
 import { Command, CommandContribution, CommandRegistry, MAIN_MENU_BAR, MenuContribution, MenuModelRegistry, MessageService } from '@theia/core/lib/common';
-import { ToolbarCommandContribution } from '@theia/toolbar/lib/browser/toolbar-command-contribution';
-
+ 
 // import { CommonMenus, open } from '@theia/core/lib/browser';
  
 import { FoldersDialog } from '../../folder/browser/folders-dialog';
-  
-export const FolderListCommand: Command = {
-    id: 'folder.list.command',
-    label: 'Open'
-};
+import { FolderCommands } from './folder-command';
 
+import { ToolbarController } from '@theia/toolbar/lib/browser/toolbar-controller';  
+import { ToolbarAlignment } from '@theia/toolbar/lib/browser/toolbar-interfaces';
+//import { FolderToolbarService } from './folder-toolbar-service';
+ 
 @injectable()
 export class FolderUICommandContribution implements CommandContribution {
     
     @inject(FoldersDialog) protected readonly foldersDialog: FoldersDialog;
     
-    @inject(ToolbarCommandContribution) protected readonly toolbar: ToolbarCommandContribution;
-
+    @inject(ToolbarController) protected readonly toolbarController: ToolbarController;
+    
+   // @inject(FolderToolbarService) protected readonly toolbarService: FolderToolbarService;
+    
     constructor(
         @inject(MessageService) private readonly messageService: MessageService,
     ) { }
 
     registerCommands(registry: CommandRegistry): void {
-        registry.registerCommand(FolderListCommand, {
+        registry.registerCommand(FolderCommands.OPEN_FOLDER, {
             execute: () =>{
                 this.messageService.info('FolderListCommand!'); 
-              this.foldersDialog.openWith();
+                this.foldersDialog.openWith();
+             
+               // this.toolbarService.setupToolbar();
             }
-        });
+        }); 
+       
+        if (1>10){
+            this.setupToolbar();
+        }
+    }
 
+    private async setupToolbar():  Promise<void>{
+        const cmd: Command = FolderCommands.OPEN_FOLDER; 
         
-        
+        await  this.toolbarController.addItem(cmd,ToolbarAlignment.CENTER);
     }
 }
  
@@ -44,8 +54,8 @@ export class FolderUIMenuContribution implements MenuContribution {
             order: '1' // that should put the menu right next to the File menu
         });
         menus.registerMenuAction(subMenuPath, {
-            commandId: FolderListCommand.id,
-            label: FolderListCommand.label,
+            commandId: FolderCommands.OPEN_FOLDER.id,
+            label: FolderCommands.OPEN_FOLDER.label,
             order: '0'
         }); 
     } 

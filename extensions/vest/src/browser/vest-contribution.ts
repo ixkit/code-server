@@ -41,10 +41,24 @@ function hideOpenWorkSpaceFeatures(menus: MenuModelRegistry){
   
    menus.unregisterMenuAction("workspace:saveAs")
    menus.unregisterMenuAction("workspace:addFolder")
-   menus.unregisterMenuAction("workspace:close") 
+   menus.unregisterMenuAction("workspace:close");
+
+   
+
+   menus.unregisterMenuAction("preferences:scope.menu");
+   menus.unregisterMenuAction("preferences:editor.contextMenu");
+   menus.unregisterMenuAction("preferences");
  
 }
- 
+/*
+export namespace PreferenceMenus {
+    export const PREFERENCE_EDITOR_CONTEXT_MENU: MenuPath = ['preferences:editor.contextMenu'];
+    export const PREFERENCE_EDITOR_COPY_ACTIONS: MenuPath = [...PREFERENCE_EDITOR_CONTEXT_MENU, 'preferences:editor.contextMenu.copy'];
+    export const FOLDER_SCOPE_MENU_PATH = ['preferences:scope.menu'];
+}
+
+
+*/
 
 @injectable()
 export class VestMenuContribution implements MenuContribution {

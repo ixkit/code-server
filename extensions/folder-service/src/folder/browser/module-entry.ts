@@ -3,7 +3,7 @@ import '../../../src/folder/browser/style/index.css';
 
 import { ContainerModule } from '@theia/core/shared/inversify';
 import { FrontendApplicationContribution } from '@theia/core/lib/browser';
-import { FolderServiceContribution } from './folder-service-contribution';
+import { FolderServiceAppContribution } from './folder-service-app-contribution';
 import { FolderService } from './folder-service'; 
 import { EditorValService } from './editor-val-service';
 import { EditorVariableContribution } from './editor-val-contribution';
@@ -14,7 +14,8 @@ import { FoldersDialog,FoldersDialogProps } from './folders-dialog';
  
  
 export default new ContainerModule(bind => {
-    bind(FrontendApplicationContribution).to(FolderServiceContribution);
+    bind(FolderServiceAppContribution).toSelf().inSingletonScope();
+    bind(FrontendApplicationContribution).to(FolderServiceAppContribution);
     bind(FolderService).toSelf().inSingletonScope();
 
     bind(EditorValService).toSelf().inSingletonScope();

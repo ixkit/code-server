@@ -79,7 +79,7 @@ export  const FolderList = ({
                       <FolderList items={item.items} onPickRow={handlePickRow}/> 
                     </div>
                     
-                  ):(<div> no items </div>)
+                  ):(<></>)
                 }
                
               </FolderBar> 

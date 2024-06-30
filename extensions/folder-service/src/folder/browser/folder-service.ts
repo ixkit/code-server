@@ -16,7 +16,6 @@ import { IRowItem } from './widget/Base/RowItem';
 
 
 
-
 export interface TargetFileOption extends EditorOpenerOptions {
     uri : URI; 
 }
@@ -27,10 +26,11 @@ function toRouteUrl(route: string): string {
 }
 /*
 http://127.0.0.1:8080/folder?dir=/WorkSpace/zanvil_page&file=views/res_users.xml&line=1
+'__manifest__.py,README.rst,readme.md,welcome.html,index.html'
 */
 function folder2RouteUrl(folder: IRowItem): string{
     const dir = folder.path;
-    const file = folder.files;
+    const file = folder.files ? folder.files : '__manifest__.py' ;
     const path = `/folder?dir=${dir}&file=${file}`; 
     return toRouteUrl(path);
 }
@@ -50,6 +50,7 @@ export class FolderService {
     @inject(RequestService)
     protected readonly requestService: RequestService;
 
+    
    
     protected getFolderApiUrl(): string { 
         //const url = new Endpoint({ path: '/api/folders' }).getRestUrl().toString();
@@ -80,10 +81,7 @@ export class FolderService {
     }
     public async redirectByFolder(folder: IRowItem): Promise<boolean> { 
         this.logger.debug('👉 redirectByFolder',folder); 
-        if (1>0){
-            folder.path ="/Users/icoco/WorkSpace/myodoo/intellau";
-            folder.files = "intellau_theme/README.rst";
-        } 
+       
         const url = folder2RouteUrl(folder);
 
         return this.redirect(url);

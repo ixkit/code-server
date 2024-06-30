@@ -10,6 +10,7 @@
   ],
   "dependencies": {
     "@theia/core": "1.50.1",
+    "@theia/preferences": "1.50.1",
     "code-server-folder-service-ext":  "0.0.0"
   },
   "devDependencies": {

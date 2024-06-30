@@ -163,7 +163,7 @@ function handleFolderPostRoute(app: Application, context?:{logger:ILogger}): voi
             folders:IFolder[]
         } = {folders:[]};
         
-        const mockMode = true;
+        const mockMode = req.query['mock'] === '1';
         if (mockMode){
             params.folders = [mockFolder()];
         }else{

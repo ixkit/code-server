@@ -48,8 +48,10 @@
   },
   "pkg-end": "--------------------------------------  end",
   "scripts": {
-    "pkg": "pkg . ",
+    "pkg": "yarn build:extensions &&  yarn browser build  &&  pkg . ",
     "pkgw": "pkg -t win . ",
+
+    "start:browser": "yarn build:extensions &&  yarn browser build  &&  yarn browser start     --hostname 0.0.0.0 --port 8080",
 
     "clean": "lerna run clean && rimraf node_modules",
     "build": "yarn build:extensions && yarn build:applications",

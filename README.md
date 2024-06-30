@@ -37,7 +37,7 @@
 ```
   #### pkg => build exe 
 ```
-  npm run pkg
+  yarn pkg
 ```
 ### Eclipse Theia IDE Template
 <details>
