@@ -13,19 +13,17 @@
         "path": "../../theia-extensions/product"
       },
       {
-        "path": "../../extensions/folder-service"
+        "path": "../../addons/folder-service"
       },
       {
-        "path": "../../extensions/echo"
+        "path": "../../addons/echo"
       },
       {
-        "path": "../../extensions/folder-view"
+        "path": "../../addons/folder-view"
       }, 
+      
       {
-        "path": "../../extensions/folderservice"
-      },
-      {
-        "path": "../../extensions/file_classify"
+        "path": "../../addons/file_classify"
       }  
     ]
 }

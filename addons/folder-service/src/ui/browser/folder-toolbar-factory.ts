@@ -3,7 +3,7 @@ import { DeflatedToolbarTree, ToolbarAlignment } from '@theia/toolbar/lib/browse
 import { FolderCommands } from './folder-command';
 //import { nls } from '@theia/core';
 // import { injectable } from '@theia/core/shared/inversify';
-  import { ToolbarDefaultsFactory} from '@theia/toolbar/lib/browser/abstract-toolbar-contribution';
+//import { ToolbarDefaultsFactory} from '@theia/toolbar/lib/browser/abstract-toolbar-contribution';
 //export const ToolbarDefaultsFactory = Symbol('ToolbarDefaultsFactory');
  
 

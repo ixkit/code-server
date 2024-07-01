@@ -9,7 +9,7 @@ import {EditorManager } from '@theia/editor/lib/browser';
 import { FolderService } from './folder-service';
 import { EditorValService } from './editor-val-service';
 import { HookWorkspaceService } from './hook-workspace-service';
-import { FolderServiceLib } from '../../land';
+import { FolderServiceLib, FolderServices } from '../../land';
 import { FoldersDialog } from './folders-dialog';
 import { FolderToolbarService } from '../../ui/browser/folder-toolbar-service';
 import { LateInjector } from '@theia/toolbar/lib/browser/toolbar-interfaces';
@@ -19,7 +19,8 @@ import { FolderToolbarWidgetFactory } from '../../ui/browser/folder-toolbar-widg
 
 
 function updatePath(path: string, title: string): void {
-    const nextURL =  window.location.origin + '/🔨' + path;
+    
+    const nextURL =  window.location.origin + FolderServices.Web.Feature.rootRoute(path) ;
     const nextTitle = title;
     const nextState = { additionalInformation: `${nextTitle}` };
 

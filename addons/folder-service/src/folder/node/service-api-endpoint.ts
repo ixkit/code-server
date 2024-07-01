@@ -1,5 +1,7 @@
+
 //import { hash } from '@theia/core/lib/common/hash';
 import { hashValue } from '@theia/core/lib/common/uuid';
+
 import { inject, injectable } from '@theia/core/shared/inversify';
 import { Application, Response } from '@theia/core/shared/express';
 // Router, Request,
@@ -7,8 +9,12 @@ import { BackendApplicationContribution } from '@theia/core/lib/node/backend-app
 import { ILogger} from '@theia/core/lib/common';
 import { FolderBusBackendService } from '../../folder-bus/common/protocol';
 import { Path } from '@theia/core/lib/common';
+import cookieParser from 'cookie-parser';
+
 import { myShareDB } from './my-sharedb';
 import { IFolder } from 'src/land';
+import { FolderServices,   } from '../../land';
+import { LoggerDelgate, __XLogger__ } from './../../land/xlogger';
 
  
  
@@ -24,32 +30,78 @@ function echoSuccess(res: Response, data: any): void {
     res.status(200).send( (data));
 }
 
+ 
+// -- active logger --
+const __TAG__ = '[🛰️ ServiceApiEndpoint]';
+
+const theLogger: LoggerDelgate ={ 
+     
+    build(handler:ILogger){ 
+        this.xLogger  = __XLogger__.get(handler, __TAG__);  
+    }
+}
+const __debug__ = (...args: any[]) => {
+    theLogger.xLogger?.debug(...args);
+} 
 
 @injectable()
 export class ServiceApiEndpoint implements BackendApplicationContribution {
     @inject(ILogger)protected readonly logger: ILogger;
 
     @inject(FolderBusBackendService) protected folderBusBackendService: FolderBusBackendService;
+ 
 
-   
     configure(app: Application): void {
+       
+        theLogger.build(this.logger);
+
+        app.use(cookieParser());
         this.deployServices(app);
-         
+        
     }
 
    deployServices(app: Application): void{
-    this.serveOpenFolderHandler(app);
-    this.serveFolderService(app);
+        this.encodeFolderHandler(app);
+        this.decodeFolderHandler(app);
+        this.serveApiFolderService(app);
    }
 
    traceHandler(app: Application): void{
-    app.get('/api/health', (request, response) => {
-        this.logger.debug(' ☎️ ', request);
+    app.get('/api/health', (req, res) => {
+        __debug__(' ☎️ ', req);
         const data ={
          'ts': (new Date()).getTime(),
-         'req': request.params
+         'req': req.params
         }
-        echoSuccess(response,data);
+        echoSuccess(res, data);
+    });
+   }
+   decodeFolderHandler(app: Application): void{
+    //const RouteTag = '%F0%9F%94%A8'; // '🔨'; 
+    //const route =`/${RouteTag}*`
+    const route = FolderServices.Web.Feature.serveRootRoute();
+    app.get( route, (req, res, next) => {
+         
+        const path = decodeURIComponent( req.path);   
+        __debug__(`decodeFolderHandler,route: ${route}, path?` , path); 
+        if (!FolderServices.Web.Feature.isRootRoute(path) ){
+            next(); 
+            return ;
+        }
+        const folderName = FolderServices.Web.Feature.parseRootRoute(path); 
+        const cookies = req.cookies; 
+        if (!cookies || !cookies.folderId){ 
+            next(); return ;
+        } 
+        const folderId = cookies.folderId;
+        let intentStr = this.folderBusBackendService.fetchIntent(folderId);
+        intentStr = decodeURIComponent(intentStr);
+        const reqData = JSON.parse(intentStr);
+        const { dir,file,line} = reqData;
+        const nextUrl = `/folder?dir=${dir}&file=${file}&line=${line}&name=${folderName}`;
+        __debug__(`decodeFolderHandler,nextUrl: ${nextUrl} `);
+        res.redirect(nextUrl);
+       
     });
    }
     /*
@@ -65,9 +117,10 @@ export class ServiceApiEndpoint implements BackendApplicationContribution {
         http://127.0.0.1:8080/folder?dirId={}&file={}line={}
 
     */
-   serveOpenFolderHandler(app: Application): void{
-        app.get('/folder', (req, res) => {
-            this.logger.debug(' ☎️ ', req);
+   encodeFolderHandler(app: Application): void{
+        const route = '/folder';
+        app.get(route, (req, res) => {
+            __debug__(` encodeFolderHandler, route: ${route} `,req.query);
             const dirPath = req.query['dir']; 
             //let file = req.query['file']; 
             
@@ -88,8 +141,10 @@ export class ServiceApiEndpoint implements BackendApplicationContribution {
             intentStr = encodeURIComponent(intentStr);
             const id = hashValue(dir);
             this.folderBusBackendService.putIntent(id,intentStr);
-            res.setHeader('Set-Cookie', `folderId=${id}; HttpOnly;Max-Age=60`);
-            res.redirect(`/#${dir}`);
+            res.setHeader('Set-Cookie', `folderId=${id}; Secure; HttpOnly;Max-Age=60`);
+            const nextUrl = `/#${dir}`;
+            __debug__(` encodeFolderHandler,nextUrl: ${nextUrl} `);
+            res.redirect(nextUrl);
         });
     } 
 
@@ -97,7 +152,7 @@ export class ServiceApiEndpoint implements BackendApplicationContribution {
     @purpose: serve folders service, post and get, make the ide to be micro services.
     @url:    http://localhost:3030/api/folders
     */    
-    serveFolderService(app: Application): void {
+    serveApiFolderService(app: Application): void {
         handleFolderGetRoute(app,{logger:this.logger});
         handleFolderPostRoute(app,{logger:this.logger});
     }
@@ -158,7 +213,7 @@ function fillFolderId(list: IFolder[], put2Cache: boolean ): void {
 function handleFolderPostRoute(app: Application, context?:{logger:ILogger}): void{
     const foldersRoute = '/api/folders';
     app.post(foldersRoute, (req, res) => {  
-        
+        __debug__(`handleFolderPostRoute,route: ${foldersRoute} `);
         let params:{
             folders:IFolder[]
         } = {folders:[]};
@@ -215,7 +270,7 @@ function handleFolderGetRoute(app: Application, context?:{logger:ILogger}): void
         
         try{ 
             const folders = myShareDB.getFolders();
-            console.log('🚌 folders:',folders);
+             
             return echoSuccess(res,{success: true, data:folders });
         
         }catch(ex){
@@ -225,3 +280,5 @@ function handleFolderGetRoute(app: Application, context?:{logger:ILogger}): void
 
     });
 }
+
+ 

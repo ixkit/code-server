@@ -10,6 +10,8 @@ export interface FolderBusBackendService {
      get the request intent by id, return a json string
     */
     getIntent(id: string): Promise<string>
+    
+    fetchIntent(id: string): string
 
     putIntent(id: string, val: any|null): Promise<boolean>;
 }

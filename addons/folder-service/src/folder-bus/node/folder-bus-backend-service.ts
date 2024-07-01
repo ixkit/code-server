@@ -13,6 +13,11 @@ export class FolderBusBackendServiceImpl implements FolderBusBackendService {
     protected bucket = new Map<string,any>();
 
     getIntent(id: string): Promise<string> {
+       
+        return Promise.resolve(this.fetchIntent(id));
+
+    }
+    fetchIntent(id: string): string  {
         const val = this.bucket.get(id);
         if (null == val){
             throw new Error('No matched intent!');
@@ -20,10 +25,8 @@ export class FolderBusBackendServiceImpl implements FolderBusBackendService {
         const result = val.toString();
 
         this.logger.debug('🧐 getIntent', id, result);
-        return Promise.resolve(result);
-
+        return result;
     }
-
     putIntent(id: string, val: any|null): Promise<boolean> {
         this.bucket.set(id, val);
         return Promise.resolve(true);

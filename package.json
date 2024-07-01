@@ -96,7 +96,7 @@
   "workspaces": [
     "applications/*",
     "theia-extensions/*",
-    "extensions/*"
+    "addons/*"
   ],
   "resolutions": {
     "@types/puppeteer": "^5.4.0",

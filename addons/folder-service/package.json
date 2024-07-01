@@ -28,8 +28,11 @@
     "@theia/request": "1.50.1", 
    
     "@vscode/sudo-prompt": "9.3.1",
-    "body-parser": "^1.17.2",
     
+    "body-parser": "^1.17.2",
+    "cookie-parser": "^1.4.6",
+    "@types/cookie-parser": "^1.4.6",
+
     "fs-extra": "^4.0.2",
     
     "react-bootstrap": "^2.10.2",
