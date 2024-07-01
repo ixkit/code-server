@@ -34,8 +34,7 @@ function echoSuccess(res: Response, data: any): void {
 // -- active logger --
 const __TAG__ = '[🛰️ ServiceApiEndpoint]';
 
-const theLogger: LoggerDelgate ={ 
-     
+const theLogger: LoggerDelgate ={  
     build(handler:ILogger){ 
         this.xLogger  = __XLogger__.get(handler, __TAG__);  
     }
@@ -44,6 +43,7 @@ const __debug__ = (...args: any[]) => {
     theLogger.xLogger?.debug(...args);
 } 
 
+// -- main calass feature --
 @injectable()
 export class ServiceApiEndpoint implements BackendApplicationContribution {
     @inject(ILogger)protected readonly logger: ILogger;

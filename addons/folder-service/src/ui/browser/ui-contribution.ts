@@ -26,7 +26,7 @@ export class FolderUICommandContribution implements CommandContribution {
     registerCommands(registry: CommandRegistry): void {
         registry.registerCommand(FolderCommands.OPEN_FOLDER, {
             execute: () =>{
-                this.messageService.info('FolderListCommand!'); 
+              
                 this.foldersDialog.openWith();
              
                // this.toolbarService.setupToolbar();
@@ -34,6 +34,7 @@ export class FolderUICommandContribution implements CommandContribution {
         }); 
        
         if (1>10){
+            this.messageService.info('FolderListCommand!'); 
             this.setupToolbar();
         }
     }

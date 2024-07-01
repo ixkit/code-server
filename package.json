@@ -38,11 +38,10 @@
   "bin": "applications/browser/lib/backend/main.js",
   "pkg": {
     "scripts": [
-      "applications/browser/lib/backend/**/*" 
+      "applications/browser/lib/backend/**/*"  
     ],
     "assets": [
       "applications/browser/lib/frontend/**/*"  
-     
     ],
     "outputPath": "output_bin"
   },

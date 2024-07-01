@@ -1,11 +1,11 @@
 import { ReactWidget } from "@theia/core/lib/browser";
 import { injectable } from "@theia/core/shared/inversify";
 
-export type FolderToolbarWidgetFactory = (id: string) => FolderToolbarWidget;
-export const FolderToolbarWidgetFactory = Symbol("FolderToolbarWidgetFactory");
+export type FolderHomePageFactory = (id: string) => FolderHomePage;
+export const FolderHomePageFactory = Symbol("FolderHomePageFactory");
 
 @injectable()
-export class FolderToolbarWidget extends ReactWidget {
+export class FolderHomePage extends ReactWidget {
 
   constructor() {
     super();
@@ -17,7 +17,7 @@ export class FolderToolbarWidget extends ReactWidget {
 
   protected render(): React.ReactNode {
     return (
-      <div >Hello xxxxx </div>
+      <div >Folder Home Page </div>
     );
   }
 }

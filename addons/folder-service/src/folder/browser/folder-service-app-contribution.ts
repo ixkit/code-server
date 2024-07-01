@@ -13,7 +13,7 @@ import { FolderServiceLib, FolderServices } from '../../land';
 import { FoldersDialog } from './folders-dialog';
 import { FolderToolbarService } from '../../ui/browser/folder-toolbar-service';
 import { LateInjector } from '@theia/toolbar/lib/browser/toolbar-interfaces';
-import { FolderToolbarWidgetFactory } from '../../ui/browser/folder-toolbar-widget';
+import { FolderHomePageFactory } from '../../ui/browser/folder-home-page';
 
 
 
@@ -36,7 +36,7 @@ function updatePath(path: string, title: string): void {
 export class FolderServiceAppContribution implements FrontendApplicationContribution {
     @inject(LateInjector) protected lateInjector: <T>(id: interfaces.ServiceIdentifier<T>) => T;
 
-    @inject(FolderToolbarWidgetFactory) private readonly folderToolbarWidgetFactory: FolderToolbarWidgetFactory;
+    @inject(FolderHomePageFactory) private readonly folderHomePageFactory: FolderHomePageFactory;
 
     @inject(WorkspaceService) protected readonly workspaceService: WorkspaceService;
 
@@ -96,15 +96,20 @@ export class FolderServiceAppContribution implements FrontendApplicationContribu
     async initializeLayout(app: FrontendApplication):  Promise<void>{
         this.logger.info('🧐 initializeLayout? ',this);
 
-        const folderToolbar = this.folderToolbarWidgetFactory('folder-toolbar');
-        await this._shell.addWidget(folderToolbar, {
-            area: 'main'
-        });
-        folderToolbar.update();
+        if (1>0){
+            await this.showFolderHomePage();
        
-        await this.folderToolbarService.setupToolbar();
+           // await this.folderToolbarService.setupToolbar();
+        }
     }
 
+    async showFolderHomePage(): Promise<void>{
+        const folderHomePage = this.folderHomePageFactory('folder-home-page');
+        await this._shell.addWidget(folderHomePage, {
+            area: 'main'
+        });
+        folderHomePage.update();
+    }
     /**
      * An event is emitted when a layout is initialized, but before the shell is attached.
      */

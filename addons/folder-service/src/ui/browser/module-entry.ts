@@ -5,12 +5,11 @@ import { FolderUICommandContribution, FolderUIMenuContribution } from './ui-cont
 import { CommandContribution, MenuContribution } from '@theia/core/lib/common';
 import { ContainerModule } from '@theia/core/shared/inversify';
 import { FolderToolbarService } from './folder-toolbar-service';
-//import { ToolbarDefaultsFactory } from '@theia/toolbar/lib/browser/toolbar-defaults';
-//import { FolderToolbarDefaults } from './folder-toolbar-factory';
-import { FolderToolbarWidget, FolderToolbarWidgetFactory } from './folder-toolbar-widget';
-//import { ToolbarBuilder } from './toolbar-builder';
-//import { ToolbarContribution } from '@theia/toolbar/lib/browser/toolbar-interfaces';
+import { ToolbarDefaultsFactory } from '@theia/toolbar/lib/browser/toolbar-defaults';
+import { FolderToolbarDefaults } from './folder-toolbar-factory';
 
+import { FolderHomePage, FolderHomePageFactory } from './folder-home-page';
+ 
  
 
 export default new ContainerModule((bind, _unbind, isBound, rebind) => {
@@ -20,16 +19,16 @@ export default new ContainerModule((bind, _unbind, isBound, rebind) => {
 
     bind(FolderToolbarService).toSelf().inSingletonScope();
 
-    // if (isBound(ToolbarDefaultsFactory)) {
-    //     rebind(ToolbarDefaultsFactory).toConstantValue(FolderToolbarDefaults);
-    //   } else {
-    //     bind(ToolbarDefaultsFactory).toConstantValue(FolderToolbarDefaults);
-    // }
+    if (isBound(ToolbarDefaultsFactory)) {
+        rebind(ToolbarDefaultsFactory).toConstantValue(FolderToolbarDefaults);
+      } else {
+        bind(ToolbarDefaultsFactory).toConstantValue(FolderToolbarDefaults);
+    }
      
-    bind(FolderToolbarWidget).toSelf();
-    bind(FolderToolbarWidgetFactory).toFactory<FolderToolbarWidget>(ctx => {
+    bind(FolderHomePage).toSelf();
+    bind(FolderHomePageFactory).toFactory<FolderHomePage>(ctx => {
         return (id: string) => {
-            const widget = ctx.container.get(FolderToolbarWidget);
+            const widget = ctx.container.get(FolderHomePage);
             widget.id = id;
             return widget;
         }
