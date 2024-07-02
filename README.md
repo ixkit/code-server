@@ -1,4 +1,8 @@
-## Code Server ☁️🔨
+### Code Server ☁️🔨
+ 
+ - The CodeServer☁️🔨 IDE is online editor for cloud server now, purpose is build security and collaboration online working platform.
+ - The IDE goal is speed up development business application for Digital Native Enterprise 🚀.
+
   #### install  
 ```
   nvm use  v18.20.2
@@ -17,7 +21,7 @@
   yarn browser start    /my-workspace --hostname 0.0.0.0 --port 8080
 
   yarn born // build -> run
-  
+
   yarn reborn // clean -> build -> run
   
 ```
