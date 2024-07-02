@@ -10,18 +10,36 @@
     background-size: contain;
   }
 
-.gs-blue-header {
-    color: #5088e7;
+.gs-header{
+    color: #f56e59;
+}
+.gs-primary-header {
+    color: #f56e59;
     text-transform: capitalize;
     font-weight: 600;
 }
-
+.gs-main-title {
+    color: black;
+    font-weight:bold;
+}
+.li-margin-2x{
+    li{
+        margin-top: 5px;
+        margin-bottom: 5px;
+        text-decoration:none
+    } 
+    text-decoration:none
+}
 .gs-text-bold {
     font-weight: 600;
 }
 
 .gs-text-underline {
     text-decoration: underline;
+}
+
+.gs-section{
+    font-style:"line-height:2.5"
 }
 
 .gs-float {

@@ -178,7 +178,7 @@ export class FoldersDialog extends BaseDialog implements Reacts.IObserver {
 
     protected renderTitle(): React.ReactNode {
         return <div className='gs-header'>
-            <h1>Folders <span className='gs-blue-header'>☕️</span></h1>
+            <h1>Folders <span className='gs-primary-header'>☕️</span></h1>
             {/* {this.renderVersion()} */}
         </div>;
     }

@@ -6,18 +6,18 @@ import { Command, CommandContribution, CommandRegistry } from '@theia/core/lib/c
 import { MenuContribution, MenuModelRegistry, MenuPath } from '@theia/core/lib/common/menu';
 import { WindowService } from '@theia/core/lib/browser/window/window-service';
 
-export namespace TheiaIDEMenus {
-    export const THEIA_IDE_HELP: MenuPath = [...CommonMenus.HELP, 'theia-ide'];
+export namespace CodeServerIDEMenus {
+    export const CodeServer_IDE_HELP: MenuPath = [...CommonMenus.HELP, 'code-server-ide'];
 }
-export namespace TheiaIDECommands {
-    export const CATEGORY = 'TheiaIDE';
+export namespace CodeServerIDECommands {
+    export const CATEGORY = 'CodeServerIDE';
     export const REPORT_ISSUE: Command = {
-        id: 'theia-ide:report-issue',
+        id: 'code-server-ide:report-issue',
         category: CATEGORY,
         label: 'Report Issue'
     };
     export const DOCUMENTATION: Command = {
-        id: 'theia-ide:documentation',
+        id: 'code-server-ide:documentation',
         category: CATEGORY,
         label: 'Documentation'
     };
@@ -29,27 +29,27 @@ export class IDEContribution implements CommandContribution, MenuContribution {
     @inject(WindowService)
     protected readonly windowService: WindowService;
 
-    static REPORT_ISSUE_URL = 'https://github.com/eclipse-theia/theia-blueprint/issues/new?assignees=&labels=&template=bug_report.md';
-    static DOCUMENTATION_URL = 'https://theia-ide.org/docs/user_getting_started/';
+    static REPORT_ISSUE_URL = 'https://github.com/ixkit/code-server/issues/new?assignees=&labels=&template=bug_report.md';
+    static DOCUMENTATION_URL = 'https://ixkit.com/code-server/docs/user_getting_started/';
 
     registerCommands(commandRegistry: CommandRegistry): void {
-        commandRegistry.registerCommand(TheiaIDECommands.REPORT_ISSUE, {
+        commandRegistry.registerCommand(CodeServerIDECommands.REPORT_ISSUE, {
             execute: () => this.windowService.openNewWindow(IDEContribution.REPORT_ISSUE_URL, { external: true })
         });
-        commandRegistry.registerCommand(TheiaIDECommands.DOCUMENTATION, {
+        commandRegistry.registerCommand(CodeServerIDECommands.DOCUMENTATION, {
             execute: () => this.windowService.openNewWindow(IDEContribution.DOCUMENTATION_URL, { external: true })
         });
     }
 
     registerMenus(menus: MenuModelRegistry): void {
-        menus.registerMenuAction(TheiaIDEMenus.THEIA_IDE_HELP, {
-            commandId: TheiaIDECommands.REPORT_ISSUE.id,
-            label: TheiaIDECommands.REPORT_ISSUE.label,
+        menus.registerMenuAction(CodeServerIDEMenus.CodeServer_IDE_HELP, {
+            commandId: CodeServerIDECommands.REPORT_ISSUE.id,
+            label: CodeServerIDECommands.REPORT_ISSUE.label,
             order: '1'
         });
-        menus.registerMenuAction(TheiaIDEMenus.THEIA_IDE_HELP, {
-            commandId: TheiaIDECommands.DOCUMENTATION.id,
-            label: TheiaIDECommands.DOCUMENTATION.label,
+        menus.registerMenuAction(CodeServerIDEMenus.CodeServer_IDE_HELP, {
+            commandId: CodeServerIDECommands.DOCUMENTATION.id,
+            label: CodeServerIDECommands.DOCUMENTATION.label,
             order: '2'
         });
     }

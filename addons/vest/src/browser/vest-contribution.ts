@@ -4,7 +4,7 @@ import { Command, CommandContribution, CommandRegistry, MAIN_MENU_BAR, MenuContr
 // import { CommonMenus, open } from '@theia/core/lib/browser';
 import { CommonMenus } from '@theia/core/lib/browser';
 
- 
+import { interfaces } from 'inversify';
 
 export const EchoCommand: Command = {
     id: 'echo.command',
@@ -44,6 +44,7 @@ function hideOpenWorkSpaceFeatures(menus: MenuModelRegistry){
    menus.unregisterMenuAction("workspace:close");
 
    
+   menus.unregisterMenuNode("7_terminal");
 
    menus.unregisterMenuAction("preferences:scope.menu");
    menus.unregisterMenuAction("preferences:editor.contextMenu");
@@ -80,3 +81,10 @@ export class VestMenuContribution implements MenuContribution {
  
     } 
 }
+
+ 
+
+export const  applyFeatures = (bind: interfaces.Bind) => { 
+    bind(CommandContribution).to(VestCommandContribution);
+    bind(MenuContribution).to(VestMenuContribution);
+};

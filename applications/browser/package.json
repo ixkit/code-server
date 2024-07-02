@@ -3,16 +3,16 @@
   "name": "code-server-browser-app",
   "description": "Eclipse Theia IDE browser product",
   "productName": "Code Server",
-  "version": "1.50.100",
-  "license": "MIT",
-  "author": "Eclipse Theia <theia-dev@eclipse.org>",
-  "homepage": "https://github.com/eclipse-theia/theia-blueprint#readme",
+  "version": "0.1.0",
+  "license": "AGPL-3.0",
+  "author": "ixkit CodeServer <👨🏻‍💻@ixkit.com>",
+  "homepage": "https://github.com/ixkit/code-server#readme",
   "bugs": {
-    "url": "https://github.com/eclipse-theia/theia/issues"
+    "url": "https://github.com/ixkit/code-server/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/eclipse-theia/theia-blueprint.git"
+    "url": "git+https://github.com/ixkit/code-server.git"
   },
   "engines": {
     "yarn": ">=1.7.0 <2",
@@ -72,8 +72,7 @@
     "code-server-folder-service-ext":  "0.1.0",
     "code-server-file-classify-ext": "0.1.0", 
     "code-server-folder-view-ext":  "0.1.0",
-    "code-server-vest-ext": "0.1.0",
-    "code-server-vest-prod-ext":  "0.1.0"
+    "code-server-vest-ext": "0.1.0"  
     
   },
  
@@ -132,7 +131,8 @@
     "build": "yarn -s rebuild && theia build --app-target=\"browser\" --mode development",
     "build:prod": "yarn -s rebuild && theia  build --app-target=\"browser\"",
     "rebuild": "theia rebuild:browser --cacheRoot .",
-    "start": "theia start --log-level=trace --plugins=local-dir:../../plugins",
+    "start": "theia start  --plugins=local-dir:../../plugins",
+    "dev": "theia start --log-level=trace --plugins=local-dir:../../plugins",
     "watch": "concurrently --kill-others -n tsc,build -c red,yellow \"tsc -b -w --preserveWatchOutput\" \"yarn -s watch:bundle\"",
     "update:theia": "ts-node ../../scripts/update-theia-version.ts",
     "update:next": "ts-node ../../scripts/update-theia-version.ts next"

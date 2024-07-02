@@ -19,8 +19,7 @@ export namespace FolderCommands {
         id: 'workbench.action.openFolder',
         category: FOLDER_CATEGORY,
         label: 'Open Folder',
-        iconClass: 'codicon codicon-file-submodule', 
-       
+        iconClass: 'codicon codicon-file-submodule'
     });
      
 

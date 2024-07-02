@@ -1,17 +1,18 @@
 {
   "name": "code-server",
   "private": true,
-  "version": "1.50.100",
-  "license": "MIT",
-  "author": "Rob Moran <github@thegecko.org>",
-  "homepage": "https://github.com/eclipse-theia/theia-blueprint#readme",
+  "version": "0.1.0",
+  "license": "AGPL-3.0",
+  "author": "ixkit CodeServer <☁️🔨@ixkit.com>",
+  "homepage": "https://github.com/ixkit/code-server#readme",
   "bugs": {
-    "url": "https://github.com/eclipse-theia/theia/issues"
+    "url": "https://github.com/ixkit/code-server/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/eclipse-theia/theia-blueprint.git"
+    "url": "git+https://github.com/ixkit/code-server.git"
   },
+  "forked":"https://github.com/eclipse-theia/theia-blueprint", 
   "engines": {
     "yarn": ">=1.7.0 <2",
     "node": ">=12.14.1"
@@ -50,8 +51,8 @@
     "pkg": "yarn build:extensions &&  yarn browser build  &&  pkg . ",
     "pkgw": "pkg -t win . ",
 
-    "run:browser": "yarn build:extensions &&  yarn browser build  &&  yarn browser start     --hostname 0.0.0.0 --port 8080",
-    "reborn": "yarn clean && yarn && yarn run:browser",
+    "born": "yarn build:extensions &&  yarn browser build  &&  yarn browser start     --hostname 0.0.0.0 --port 8080",
+    "reborn": "yarn clean && yarn && yarn run:born",
 
     "clean": "lerna run clean && rimraf node_modules",
     "build": "yarn build:extensions && yarn build:applications",

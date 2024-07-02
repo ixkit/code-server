@@ -6,14 +6,14 @@
   "version": "1.50.100",
   "main": "scripts/theia-electron-main.js",
   "license": "MIT",
-  "author": "Eclipse Theia <theia-dev@eclipse.org>",
-  "homepage": "https://github.com/eclipse-theia/theia-blueprint#readme",
+  "author": "ixkit CodeServer <☁️🔨@ixkit.com>",
+  "homepage": "https://github.com/ixkit/code-server#readme",
   "bugs": {
-    "url": "https://github.com/eclipse-theia/theia/issues"
+    "url": "https://github.com/ixkit/code-server/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/eclipse-theia/theia-blueprint.git"
+    "url": "git+https://github.com/ixkit/code-server.git"
   },
   "engines": {
     "yarn": ">=1.7.0 <2",

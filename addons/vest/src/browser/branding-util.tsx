@@ -1,11 +1,4 @@
-/********************************************************************************
- * Copyright (C) 2020 EclipseSource and others.
- *
- * This program and the accompanying materials are made available under the
- * terms of the MIT License, which is available in the project root.
- *
- * SPDX-License-Identifier: MIT
- ********************************************************************************/
+
 
 import { Key, KeyCode } from '@theia/core/lib/browser';
 import { WindowService } from '@theia/core/lib/browser/window/window-service';
@@ -15,6 +8,14 @@ export interface ExternalBrowserLinkProps {
     text: string;
     url: string;
     windowService: WindowService;
+}
+export const BaseInfo = {
+    getAppVersion(): string {
+        return '0.1.0';
+    },
+    getTheiaVersion(): string {
+        return '1.50.100';
+    }
 }
 
 function ExternalBrowserLink(props: ExternalBrowserLinkProps): JSX.Element {
@@ -41,15 +42,17 @@ export function renderWhatIs(windowService: WindowService): React.ReactNode {
             What is this?
         </h3>
         <div>
-            The Eclipse Theia IDE is a modern and open IDE for cloud and desktop. The Theia IDE is based on the <ExternalBrowserLink text="Theia platform"
-            url="https://theia-ide.org" windowService={windowService} ></ExternalBrowserLink>.
+            <u className='li-margin-2x'>
+                <li >
+                The CodeServer☁️🔨 IDE is online editor for cloud server now, purpose is build security and collaboration online working platform.
+                </li>
+                <li>
+                The IDE goal is speed up development business application for <span className="gs-main-title">Digital Native Enterprise</span> 🚀. 
+                </li>
+            </u> 
         </div>
-        <div>
-            The IDE is available as a <ExternalBrowserLink text="downloadable desktop application" url="https://theia-ide.org//#theiaidedownload"
-            windowService={windowService} ></ExternalBrowserLink>. You can also <ExternalBrowserLink text="try the latest version of the Theia IDE online"
-            url="https://try.theia-cloud.io/" windowService={windowService} ></ExternalBrowserLink>. The online test version is limited to 30 minutes per session and hosted
-            via <ExternalBrowserLink text="Theia Cloud" url="https://theia-cloud.io/" windowService={windowService} ></ExternalBrowserLink>.
-        </div>
+       
+         
     </div>;
 }
 
@@ -66,7 +69,7 @@ export function renderExtendingCustomizing(windowService: WindowService): React.
         <div>
             Furthermore, the Theia IDE is based on the flexible Theia platform. Therefore, the Theia IDE can serve as a <span className='gs-text-bold'>template</span> for building
             custom tools and IDEs. Browse <ExternalBrowserLink text="the documentation" url="https://theia-ide.org/docs/composing_applications/"
-            windowService={windowService} ></ExternalBrowserLink> to help you customize and build your own Eclipse Theia-based product.
+            windowService={windowService} ></ExternalBrowserLink> to help you customize and build your own CodeServer-based product.
         </div>
     </div>;
 }
@@ -77,9 +80,25 @@ export function renderSupport(windowService: WindowService): React.ReactNode {
             Professional Support
         </h3>
         <div>
-            Professional support, implementation services, consulting and training for building tools like Theia IDE and for building other tools based on Eclipse Theia is
-            available by selected companies as listed on the <ExternalBrowserLink text=" Theia support page" url="https://theia-ide.org/support/"
+            Professional support, implementation services, consulting for building tools like CodeServer IDE and for building other tools based on CodeServer is
+            available  on the <ExternalBrowserLink text=" CodeServer support page" url="https://ixkit.com/code-server/support/"
             windowService={windowService} ></ExternalBrowserLink>.
+        </div>
+    </div>;
+}
+
+export function renderLand(windowService: WindowService): React.ReactNode {
+    return <div className='gs-section'>
+        <h3 className='gs-section-header'>
+            Land
+        </h3>
+        <div>    
+            The IDE is supprot by the <ExternalBrowserLink text="ixkit Team"
+            url="http://ixkit.com" windowService={windowService} ></ExternalBrowserLink>.
+        </div> 
+        <div>    
+            The IDE is based on the open source <ExternalBrowserLink text="Eclipse Theia"
+            url="https://github.com/eclipse-theia" windowService={windowService} ></ExternalBrowserLink>.
         </div>
     </div>;
 }
@@ -90,16 +109,15 @@ export function renderTickets(windowService: WindowService): React.ReactNode {
             Reporting feature requests and bugs
         </h3>
         <div >
-            The features in the Eclipse Theia IDE are based on Theia and the included
-            extensions/plugins. For bugs in Theia please consider opening an issue in
-            the <ExternalBrowserLink text="Theia project on Github" url="https://github.com/eclipse-theia/theia/issues/new/choose"
+            For bugs in CodeServer please consider opening an issue in
+            the <ExternalBrowserLink text="Code Server project on Github" url="https://github.com/ixkit/code-server/issues/new/choose"
                 windowService={windowService} ></ExternalBrowserLink>.
         </div>
         <div>
-            Eclipse Theia IDE only packages existing functionality into a product and installers
+           CodeServer IDE only packages existing functionality into a product and installers
             for the product. If you believe there is a mistake in packaging, something needs to be added to the
             packaging or the installers do not work properly,
-            please <ExternalBrowserLink text="open an issue on Github" url="https://github.com/eclipse-theia/theia-blueprint/issues/new/choose"
+            please <ExternalBrowserLink text="open an issue on Github" url="https://github.com/ixkit/code-server/issues/new/choose"
                 windowService={windowService} ></ExternalBrowserLink> to let us know.
         </div>
     </div>;
@@ -111,8 +129,8 @@ export function renderSourceCode(windowService: WindowService): React.ReactNode 
             Source Code
         </h3>
         <div >
-            The source code of Eclipse Theia IDE is available
-            on <ExternalBrowserLink text="Github" url="https://github.com/eclipse-theia/theia-blueprint"
+            The source code of CodeServer IDE is available
+            on <ExternalBrowserLink text="Github" url="https://github.com/ixkit/code-server"
                 windowService={windowService} ></ExternalBrowserLink>.
         </div>
     </div>;
@@ -124,8 +142,8 @@ export function renderDocumentation(windowService: WindowService): React.ReactNo
             Documentation
         </h3>
         <div >
-            Please see the <ExternalBrowserLink text="documentation" url="https://theia-ide.org/docs/user_getting_started/"
-            windowService={windowService} ></ExternalBrowserLink> on how to use the Theia IDE.
+            Please see the <ExternalBrowserLink text="documentation" url="https://ixkit.com/code-server/docs/user_getting_started/"
+            windowService={windowService} ></ExternalBrowserLink> on how to use the CodeServer IDE.
         </div>
     </div>;
 }
@@ -136,7 +154,7 @@ export function renderDownloads(): React.ReactNode {
             Updates and Downloads
         </h3>
         <div className='gs-action-container'>
-            You can update Eclipse Theia IDE directly in this application by navigating to
+            You can update CodeServer IDE directly in this application by navigating to
             File {'>'} Preferences {'>'} Check for Updates… Moreover the application will check for updates
             after each launch automatically.
         </div>

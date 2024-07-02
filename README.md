@@ -16,9 +16,9 @@
 
   yarn browser start    /my-workspace --hostname 0.0.0.0 --port 8080
 
-  yarn run:browser // build and run
+  yarn born // build -> run
   
-  yarn reborn  // clean -> build --> run 
+  yarn reborn // clean -> build -> run
   
 ```
   while code server lauched, open browser naviaget to address:   

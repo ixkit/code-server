@@ -92,14 +92,14 @@ export function renderTickets(windowService: WindowService): React.ReactNode {
         <div >
             The features in the Eclipse Theia IDE are based on Theia and the included
             extensions/plugins. For bugs in Theia please consider opening an issue in
-            the <ExternalBrowserLink text="Theia project on Github" url="https://github.com/eclipse-theia/theia/issues/new/choose"
+            the <ExternalBrowserLink text="Theia project on Github" url="https://github.com/ixkit/code-server/issues/new/choose"
                 windowService={windowService} ></ExternalBrowserLink>.
         </div>
         <div>
             Eclipse Theia IDE only packages existing functionality into a product and installers
             for the product. If you believe there is a mistake in packaging, something needs to be added to the
             packaging or the installers do not work properly,
-            please <ExternalBrowserLink text="open an issue on Github" url="https://github.com/eclipse-theia/theia-blueprint/issues/new/choose"
+            please <ExternalBrowserLink text="open an issue on Github" url="https://github.com/ixkit/code-server-blueprint/issues/new/choose"
                 windowService={windowService} ></ExternalBrowserLink> to let us know.
         </div>
     </div>;
@@ -112,7 +112,7 @@ export function renderSourceCode(windowService: WindowService): React.ReactNode 
         </h3>
         <div >
             The source code of Eclipse Theia IDE is available
-            on <ExternalBrowserLink text="Github" url="https://github.com/eclipse-theia/theia-blueprint"
+            on <ExternalBrowserLink text="Github" url="https://github.com/ixkit/code-server-blueprint"
                 windowService={windowService} ></ExternalBrowserLink>.
         </div>
     </div>;
