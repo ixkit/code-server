@@ -3,15 +3,14 @@
   "keywords": [
     "theia-extension"
   ],
-  "version": "0.0.0",
+  "version": "0.1.0",
   "files": [
     "lib",
     "src"
   ],
   "dependencies": {
     "@theia/core": "1.50.1",
-    "@theia/preferences": "1.50.1",
-    "code-server-folder-service-ext":  "0.0.0"
+    "@theia/preferences": "1.50.1"
   },
   "devDependencies": {
     "rimraf": "^2.7.1",

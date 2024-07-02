@@ -1,6 +1,6 @@
 {
   "name": "code-server-folder-service-ext",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "keywords": [
     "theia-extension"
   ],
@@ -34,10 +34,7 @@
     "@types/cookie-parser": "^1.4.6",
 
     "fs-extra": "^4.0.2",
-    
-    "swagger-autogen": "2.23.7",
-    "swagger-ui-express": "5.0.1",
-
+  
     "react-bootstrap": "^2.10.2",
     "react-viewport-list": "^7.1.2",
     "react-json-to-table": "^0.1.7",
@@ -57,14 +54,7 @@
     "update:theia": "ts-node ../../scripts/update-theia-version.ts",
     "update:next": "ts-node ../../scripts/update-theia-version.ts next"
   },
-  "keepv":{
-    "react": "^16.8.0",
-    "react-json-to-table": "^0.1.7",
-    "react-router-dom": "^6.23.0",
-    "react-tooltip": "^5.26.4",
-    "react-viewport-list": "^7.1.2",
-    "react-tooltip2": "^4.2.21"
-  },
+  
   "peerDependencies": {
     "react": "^18.2.0"  
   },

@@ -1,9 +1,9 @@
 {
-  "name": "code-server-file_classify-ext",
+  "name": "code-server-file-classify-ext",
   "keywords": [
     "theia-extension"
   ],
-  "version": "0.0.0",
+  "version": "0.1.0",
   "files": [
     "lib",
     "src"
@@ -23,7 +23,7 @@
   },
   "theiaExtensions": [
     {
-      "frontend": "lib/browser/file_classify-frontend-module"
+      "frontend": "lib/browser/module-entry"
     }
   ]
 }

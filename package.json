@@ -50,7 +50,8 @@
     "pkg": "yarn build:extensions &&  yarn browser build  &&  pkg . ",
     "pkgw": "pkg -t win . ",
 
-    "start:browser": "yarn build:extensions &&  yarn browser build  &&  yarn browser start     --hostname 0.0.0.0 --port 8080",
+    "run:browser": "yarn build:extensions &&  yarn browser build  &&  yarn browser start     --hostname 0.0.0.0 --port 8080",
+    "reborn": "yarn clean && yarn && yarn run:browser",
 
     "clean": "lerna run clean && rimraf node_modules",
     "build": "yarn build:extensions && yarn build:applications",
@@ -94,8 +95,10 @@
   ],
   "workspaces": [
     "applications/*",
-    "theia-extensions/*",
     "addons/*"
+  ],
+  "wk":[
+    "theia-extensions/*" 
   ],
   "resolutions": {
     "@types/puppeteer": "^5.4.0",

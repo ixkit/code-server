@@ -3,10 +3,10 @@
  */
 import { LabelProviderContribution } from "@theia/core/lib/browser";
 import { ContainerModule } from "@theia/core/shared/inversify";
-import { File_classifyLabelProviderContribution,MainFile_classifyLabelProviderContribution } from './file_classify-contribution';
-import '../../src/browser/style/example.css';
+import { FileClassifyLabelProviderContribution,MainFile_classifyLabelProviderContribution } from './file-classify-contribution';
+import '../../src/browser/style/file-classify.css';
 
 export default new ContainerModule(bind => {
-    bind(LabelProviderContribution).to(File_classifyLabelProviderContribution);
+    bind(LabelProviderContribution).to(FileClassifyLabelProviderContribution);
     bind(LabelProviderContribution).to(MainFile_classifyLabelProviderContribution);
 });

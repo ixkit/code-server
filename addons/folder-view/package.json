@@ -1,10 +1,10 @@
 {
-  "name": "theia-ide-folderview-ext",
+  "name": "code-server-folder-view-ext",
   
   "keywords": [
     "theia-extension"
   ],
-  "version": "0.0.0",
+  "version": "0.1.0",
   "files": [
     "lib",
     "src"

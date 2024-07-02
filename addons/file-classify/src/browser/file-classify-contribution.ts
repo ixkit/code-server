@@ -11,7 +11,7 @@ function isMainFile(uri:URI) :boolean{
 }
 
 @injectable()
-export class File_classifyLabelProviderContribution extends FileTreeLabelProvider {
+export class FileClassifyLabelProviderContribution extends FileTreeLabelProvider {
     
     canHandle(element: object): number {
         if (FileStatNode.is(element)) {

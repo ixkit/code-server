@@ -16,12 +16,8 @@
         "path": "../../addons/folder-service"
       },
       {
-        "path": "../../addons/echo"
-      },
-      {
         "path": "../../addons/folder-view"
-      }, 
-      
+      },  
       {
         "path": "../../addons/file_classify"
       }  

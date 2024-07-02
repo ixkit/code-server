@@ -95,7 +95,10 @@
     "@theia/variable-resolver": "1.50.1",
     "@theia/vsx-registry": "1.50.1",
     "@theia/workspace": "1.50.1",
-    "fs-extra": "^9.0.1",
+    "fs-extra": "^9.0.1" 
+   
+  },
+  "keep":{
     "theia-ide-launcher-ext": "1.50.100",
     "theia-ide-product-ext": "1.50.100",
     "theia-ide-updater-ext": "1.50.100"

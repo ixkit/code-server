@@ -69,19 +69,15 @@
     "@theia/toolbar": "1.50.1",
     "@theia/getting-started": "1.50.1", 
 
-    "code-server-folder-service-ext":  "0.0.0",
-    "code-server-file_classify-ext": "0.0.0", 
-    "code-server-vest-ext": "0.0.0",
+    "code-server-folder-service-ext":  "0.1.0",
+    "code-server-file-classify-ext": "0.1.0", 
+    "code-server-folder-view-ext":  "0.1.0",
+    "code-server-vest-ext": "0.1.0",
+    "code-server-vest-prod-ext":  "0.1.0"
     
-    "theia-ide-folderview-ext":  "0.0.0" 
-   
-   
   },
  
-  "temp-link":{
-    "theia-ide-folderservice-ext":  "0.0.0",
-    "theia-ide-product-ext": "1.50.100"
-  },
+ 
 
   "keep_dependencies": {
     "@theia/bulk-edit": "1.50.1",
