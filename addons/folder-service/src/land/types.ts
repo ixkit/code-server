@@ -27,10 +27,12 @@ export namespace FolderServices{
     export namespace Web {
         export const RouteTag = '/🔨';
         
+        const RouteTagEncode = '/%F0%9F%94%A8'; //  '/🔨';
+
         export const Feature={
             
             serveRootRoute(): string{
-                const val = '/%F0%9F%94%A8'; //  '/🔨';
+                const val = RouteTagEncode; 
                 return  val + '*';
             },
             rootRoute(path: string): string{
@@ -40,7 +42,7 @@ export namespace FolderServices{
                 if (!path){
                     return false;
                 }
-                return path.startsWith(RouteTag);
+                return  path.startsWith(RouteTag) || path.startsWith(RouteTagEncode);
             },
             parseRootRoute(path: string): string{
                 if (!path){ return ''}

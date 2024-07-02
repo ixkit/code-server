@@ -43,7 +43,7 @@
     "assets": [
       "applications/browser/lib/frontend/**/*"  
     ],
-    "outputPath": "output_bin"
+    "outputPath": "dist_bin"
   },
   "pkg-end": "--------------------------------------  end",
   "scripts": {

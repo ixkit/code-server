@@ -13,6 +13,6 @@ license-check-summary.txt*
 
 *.zip
 
-output_bin
+dist_bin
 
 timeline

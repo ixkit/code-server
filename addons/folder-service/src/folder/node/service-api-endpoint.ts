@@ -1,5 +1,4 @@
 
-//import { hash } from '@theia/core/lib/common/hash';
 import { hashValue } from '@theia/core/lib/common/uuid';
 
 import { inject, injectable } from '@theia/core/shared/inversify';
@@ -18,10 +17,10 @@ import { LoggerDelgate, __XLogger__ } from './../../land/xlogger';
 
  
  
-function echoError(res: Response, data: any): void {
-    // if (errCode){
-    //     res.status(errCode).send(data); 
-    // } 
+function echoError(res: Response, data: any, errorCode?: number): void {
+    if (errorCode){
+        res.status(errorCode).send(data); 
+    } 
     res.status(500).send( (data));
   }
   
@@ -76,22 +75,23 @@ export class ServiceApiEndpoint implements BackendApplicationContribution {
         echoSuccess(res, data);
     });
    }
-   decodeFolderHandler(app: Application): void{
-    //const RouteTag = '%F0%9F%94%A8'; // '🔨'; 
-    //const route =`/${RouteTag}*`
+   decodeFolderHandler(app: Application): void {
+
     const route = FolderServices.Web.Feature.serveRootRoute();
     app.get( route, (req, res, next) => {
-         
-        const path = decodeURIComponent( req.path);   
+        const path = decodeURIComponent( req.path);
         __debug__(`decodeFolderHandler,route: ${route}, path?` , path); 
-        if (!FolderServices.Web.Feature.isRootRoute(path) ){
-            next(); 
+        if (!FolderServices.Web.Feature.isRootRoute(path) ) {
+            next();
             return ;
         }
         const folderName = FolderServices.Web.Feature.parseRootRoute(path); 
         const cookies = req.cookies; 
+        __debug__(`decodeFolderHandler,cookies? ` , cookies); 
         if (!cookies || !cookies.folderId){ 
-            next(); return ;
+            __debug__(`⚠️ decodeFolderHandler, cookies no value for folderId! back to root ` ); 
+            res.redirect('/');
+            return ;
         } 
         const folderId = cookies.folderId;
         let intentStr = this.folderBusBackendService.fetchIntent(folderId);
@@ -100,6 +100,8 @@ export class ServiceApiEndpoint implements BackendApplicationContribution {
         const { dir,file,line} = reqData;
         const nextUrl = `/folder?dir=${dir}&file=${file}&line=${line}&name=${folderName}`;
         __debug__(`decodeFolderHandler,nextUrl: ${nextUrl} `);
+        //  re-assgin the cookie value
+        //res.setHeader('Set-Cookie', `folderId=${folderId}; Secure; HttpOnly;Max-Age=60`);
         res.redirect(nextUrl);
        
     });
@@ -141,6 +143,7 @@ export class ServiceApiEndpoint implements BackendApplicationContribution {
             intentStr = encodeURIComponent(intentStr);
             const id = hashValue(dir);
             this.folderBusBackendService.putIntent(id,intentStr);
+            // max-age = 60 * 60  =  3600 (one hour)
             res.setHeader('Set-Cookie', `folderId=${id}; Secure; HttpOnly;Max-Age=60`);
             const nextUrl = `/#${dir}`;
             __debug__(` encodeFolderHandler,nextUrl: ${nextUrl} `);
