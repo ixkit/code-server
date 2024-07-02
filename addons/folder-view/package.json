@@ -1,0 +1,39 @@
+{
+  "name": "code-server-folder-view-ext",
+  
+  "keywords": [
+    "theia-extension"
+  ],
+  "version": "0.1.0",
+  "files": [
+    "lib",
+    "src"
+  ],
+  "dependencies": {
+    "@theia/core": "1.50.1"
+  },
+  "devDependencies": {
+    "rimraf": "^2.7.1",
+    "typescript": "~4.5.5",
+    
+    "@types/jest": "^26.0.20",
+    "jest": "^26.6.3",
+    "ts-node": "^10.9.1",
+    "ts-jest": "^26.5.6"
+  },
+  "keep": {
+    "@testing-library/react": "^11.2.7"
+  },
+  "scripts": {
+    "prepare": "yarn run clean && yarn run build",
+    "clean": "rimraf lib",
+    "build": "tsc",
+    "watch": "tsc -w",
+    "test": "jest --config configs/jest.config.ts"
+  },
+  "theiaExtensions": [
+    {
+      "frontend": "lib/browser/folder-api-frontend-module"
+    }
+  ]
+}

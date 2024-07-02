@@ -1,0 +1,25 @@
+{
+    "extends": "../../configs/base.tsconfig",
+    "include": [],
+    "compilerOptions": {
+      "composite": true,
+     
+    },
+    "references": [
+      {
+        "path": "../../theia-extensions/launcher"
+      },
+      {
+        "path": "../../theia-extensions/product"
+      },
+      {
+        "path": "../../addons/folder-service"
+      },
+      {
+        "path": "../../addons/folder-view"
+      },  
+      {
+        "path": "../../addons/file_classify"
+      }  
+    ]
+}

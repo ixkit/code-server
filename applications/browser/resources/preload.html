@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <style>
+        html,
+        body {
+            background-color: black;
+          
+        }
+
+        .theia-preload {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            /* Above styles copied from https://github.com/eclipse-theia/theia/blob/5aeef6c0c683b4e91713ab736957e6655b486adc/packages/core/src/browser/style/index.css#L147-L151 */
+            /* Otherwise, there is a flickering when Theia's CSS loads. */
+
+            background-image: none;
+        }
+
+        .theia-preload::after {
+            /* remove default loading animation */
+            content: none;
+        }
+
+        .spinner-container {
+            display: flex;
+            flex-direction: center;
+            align-self: center;
+            justify-content: center;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        .custom-spinner {
+            align-self: center;
+        }
+
+        .custom-spinner div {
+            /* width: 16vw;
+            height: 16vh; */
+            animation-delay: 0;
+            animation-duration: 2s;
+            animation-iteration-count: infinite;
+            animation-name: theia-ide-spinner;
+            animation-timing-function: ease;
+           
+        }
+
+        @keyframes theia-ide-spinner {
+            0% {
+                filter: invert(49%) sepia(71%) saturate(5980%) hue-rotate(199deg) brightness(103%) contrast(101%);
+                left: 50%; top: 50%;
+                transform: scale(1.0) translateX(-50%) translateY(-50%);
+            }
+
+            50% {
+                filter: invert(57%) sepia(52%) saturate(1900%) hue-rotate(160deg) brightness(100%) contrast(102%);
+                left: 50%; top: 50%;
+                transform: scale(0.8) translateX(-50%) translateY(-50%);;
+            }
+
+            100% {
+                filter: invert(49%) sepia(71%) saturate(5980%) hue-rotate(199deg) brightness(103%) contrast(101%);
+                left: 50%;top: 50%;
+                transform: scale(1.0)  translateX(-50%) translateY(-50%);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="theia-preload" style="display:relative; ">
+        
+            <div class='custom-spinner'>
+                 
+                <div id="spinner-title" style="margin: 0;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%); 
+                color: aqua;  
+                z-index:99999;"
+
+                style2="margin: 0;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%); 
+                color: aqua;  
+                z-index:99999;"
+                >
+                
+                <span style="font-weight: bold; font-size: 30px; "> CodeServer ☁️🔨 </span>
+                </div>
+            </div> 
+       
+            <canvas id="codeStreamCanvas"  style="margin:0; width:100%;height: 100%; position:absolute;z-index:-1;"/>
+    </div>
+   
+   <script>
+        if (document.head) {
+            let link = document.createElement('link');
+            link.rel = 'icon';
+            link.href = '/favicon.ico';
+            document.head.appendChild(link);
+        }
+    </script>
+<!-- code stream effect -->
+<script>
+var g_timer ;
+
+const getAnimateCanvas =()=>{
+    const theCanvas = document.getElementById('codeStreamCanvas');
+    return theCanvas ;
+}
+const hasDestory=()=>{
+    const theCanvas = getAnimateCanvas();
+    return !theCanvas;
+}
+const animate_coding_effect =()=> { 
+
+    const H = window.innerHeight;
+    const W = window.innerWidth;
+    const theCanvas = getAnimateCanvas()
+    const ctx = theCanvas.getContext('2d');
+
+    theCanvas.height = H;
+    theCanvas.width = W;
+
+    var fontsize = 18;
+    var text = [];
+    var lie = Math.floor(W / fontsize);
+    var str = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    for (var i = 0; i < lie; i++) {
+      text.push(0);
+    }
+    ctx.font = fontsize + 'px ';
+
+    function draw() {
+
+      ctx.fillStyle = 'rgba(0,0,0,0.08)'
+      ctx.fillRect(0, 0, W, H);
+      ctx.fillStyle = randColor();
+      for (var i = 0; i < lie; i++) {
+        var index = Math.floor(Math.random() * str.length);
+        var x = Math.floor(fontsize * i)
+        var y = text[i] * fontsize
+        ctx.fillText(str[index], x, y);
+        if (y > H && Math.random() > 0.99) {
+          text[i] = 0
+        }
+        text[i]++;
+      }
+    }
+
+    function randColor() {
+      var r = Math.ceil(Math.random() * 155) + 100;
+      var g = Math.ceil(Math.random() * 155) + 100;
+      var b = Math.ceil(Math.random() * 155) + 100;
+      return 'rgb(' + r + ',' + g + ',' + b + ')'
+    }
+   
+    g_timer= setInterval(function() {
+      draw();
+      if (hasDestory()){
+        clearInterval(g_timer);
+      }
+    }, 1000 / 30)
+}
+const listenWindowSize = ()=>{
+    window.onresize=function(){ 
+      fitScren();
+    } 
+}  
+const fitScren =()=>{
+   
+    const theCanvas = getAnimateCanvas();
+    if (!theCanvas) return ; 
+    console.log('🚀 try fitScren') 
+
+    const H = window.innerHeight;
+    const W = window.innerWidth; 
+    if (H !== theCanvas.height){
+        theCanvas.height = H;  
+    }
+    if (W !== theCanvas.width){
+        theCanvas.width = W;   
+    }  
+}
+const startFitScreen =()=>{
+    fitScren();
+    let counter = 0; 
+    const intervalId = setInterval(() => {
+      counter++;
+      fitScren();
+      if (counter >= 8) {
+          clearInterval(intervalId); 
+      }
+    }, 1000*3);
+
+}
+
+window.onload=function(){
+    //console.log('🚀 effect.js,window.onload')
+    if (getAnimateCanvas()){
+        startFitScreen();
+        animate_coding_effect()
+        listenWindowSize();
+    }
+} 
+ 
+//console.log('🚀 effect.js')       
+</script>
+</body>
+
+</html>

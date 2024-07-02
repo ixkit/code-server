@@ -1,0 +1,72 @@
+/** folder bar **/
+.folder-bar{
+  margin: 0px 5px 5px 5px; 
+ 
+ .title-row{ 
+   cursor: pointer;
+   min-height: 40px;
+   border-radius: 4px;
+   font-family: var(--vzcode-font-family);
+   font-weight: 500;
+ }
+ .title-row:hover {
+   /* background-color: #47546b; */
+   background-color: rgba(255, 255, 255, 0.075);
+ }
+ .title-content-short{
+   width: 90%;
+   text-overflow: ellipsis;
+   overflow: hidden;
+   /* background-color: red; */
+ }
+ .title-content-full{ 
+   text-overflow: ellipsis;
+   overflow: hidden;
+ }
+ .detail-card{  
+   /* // margin: 10px 10px 10px 10px;   */
+
+    margin-left: 10px;
+    /* color: rgb(23, 235, 220);  */
+
+    .detail-card-content{ 
+       /*  min-height: 50px;
+         box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px, rgba(9, 30, 66, 0.13) 0px 0px 1px 1px; */
+       border-radius: 5px; 
+
+       margin-bottom: 5px;
+    }
+ }
+ .collapse-css-transition {
+   /* // transition: height 280ms cubic-bezier(0.4, 0, 0.2, 1);  */
+   transition: height 280ms cubic-bezier(0.4, 0, 0.2, 1); 
+ }  
+
+ .selecte-box{ 
+ 
+   /* display: flex;
+     justify-content: right;
+     padding: 10px;
+     font-size: 12px; */
+   margin: auto;
+   margin-right: 10px;
+   
+   .rightButton {
+     width: 20px;
+     height: 20px;
+     border-radius: 50%;
+     border-color: beige;
+     margin: auto;
+     cursor: pointer;
+     
+   }
+   .rightButton:hover { 
+     scale: 1;
+     color: aqua;
+   }
+   .emoj-buttion{
+     font-size: medium;
+     font-weight: bold;
+   }
+ }
+}

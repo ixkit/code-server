@@ -1,0 +1,86 @@
+
+:root {
+    --theia-branding-logo: url(../icons/IDE.png);
+}
+
+.theia-icon {
+    background-image: url("../icons/512-512.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+
+.gs-header{
+    color: #f56e59;
+}
+.gs-primary-header {
+    color: #f56e59;
+    text-transform: capitalize;
+    font-weight: 600;
+}
+.gs-main-title {
+    color: black;
+    font-weight:bold;
+}
+.li-margin-2x{
+    li{
+        margin-top: 5px;
+        margin-bottom: 5px;
+        text-decoration:none
+    } 
+    text-decoration:none
+}
+.gs-text-bold {
+    font-weight: 600;
+}
+
+.gs-text-underline {
+    text-decoration: underline;
+}
+
+.gs-section{
+    font-style:"line-height:2.5"
+}
+
+.gs-float {
+    float: right;
+}
+
+.gs-logo {
+    background-image: var(--theia-branding-logo);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 250px;
+    height: 118px;
+    padding: 20px;
+}
+
+.ad-logo {
+    background-image: var(--theia-branding-logo);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 250px;
+    height: 118px;
+    padding: 20px;
+}
+
+.ad-float {
+    float: right;
+}
+
+.ad-container {
+    padding: 20px;
+    width: 1150px;
+    height: 700;
+}
+
+ul.theia-aboutExtensions {
+    height: 450px;
+    overflow: hidden;
+    overflow-y: scroll;
+    list-style-type: none;
+    padding: 0;
+    margin-left: 10px;
+ }

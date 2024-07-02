@@ -1,0 +1,79 @@
+appId: eclipse.theia
+productName: TheiaIDE
+copyright: Copyright © 2020-2023 Eclipse Foundation, Inc
+electronDist: ../../node_modules/electron/dist
+electronVersion: 28.3.3
+# Although it is generally not recommended to disable asar, it is required for Theia.
+# Enabling this leads to: process ERROR Error: spawn ENOTDIR
+# because binaries can not be executed from the asar archive.
+# See asar file API limitations: https://www.electronjs.org/docs/tutorial/application-packaging#limitations-of-the-node-api
+asar: false
+nodeGypRebuild: false
+npmRebuild: false
+
+directories:
+  buildResources: resources
+
+# node_modules and package.json are copied automatically
+# Exclude node_modules manually because electron is copied by electron-builder and we are using a bundled backend
+files:
+  - src-gen
+  - lib
+  - resources/icons/WindowIcon/512-512.png
+  - resources/TheiaIDESplash.svg
+  - scripts
+  - "!**node_modules/**"
+extraResources:
+  - from: ../../plugins
+    to: app/plugins
+
+win:
+  icon: resources/icons/WindowsLauncherIcon/TheiaIDE.ico
+  target:
+    - nsis
+  publish:
+    provider: generic
+    url: "https://download.eclipse.org/theia/ide/${version}/windows"
+    useMultipleRangeRequest: false
+mac:
+  icon: resources/icons/MacLauncherIcon/512-512-2.icns
+  category: public.app-category.developer-tools
+  darkModeSupport: true
+  target:
+    - dmg
+    - zip
+  publish:
+    provider: generic
+    url: "https://download.eclipse.org/theia/ide/latest/macos"
+linux:
+  icon: resources/icons/LinuxLauncherIcon/512-512.png
+  category: Development
+  vendor: Eclipse Foundation, Inc
+  target:
+    - deb
+    - AppImage
+  publish:
+    provider: generic
+    url: "https://download.eclipse.org/theia/ide/latest/linux"
+
+nsis:
+  menuCategory: true
+  oneClick: false
+  perMachine: false
+  installerHeaderIcon: resources/icons/WindowsLauncherIcon/TheiaIDE.ico
+  installerIcon: resources/icons/WindowsLauncherIcon/TheiaIDE.ico
+  uninstallerIcon: resources/icons/WindowsLauncherIcon/TheiaIDE.ico
+  installerSidebar: resources/icons/InstallerSidebarImage/164-314Windows.bmp
+  uninstallerSidebar: resources/icons/InstallerSidebarImage/164-314Windows.bmp
+  allowToChangeInstallationDirectory: true
+  runAfterFinish: false
+  artifactName: ${productName}Setup.${ext}
+  license: LICENSE
+dmg:
+  artifactName: ${productName}.${ext}
+deb:
+  artifactName: ${productName}.${ext}
+appImage:
+  artifactName: ${productName}.${ext}
+
+afterPack: ./scripts/after-pack.js

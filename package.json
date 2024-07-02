@@ -1,0 +1,111 @@
+{
+  "name": "code-server",
+  "private": true,
+  "version": "0.1.0",
+  "license": "AGPL-3.0",
+  "author": "ixkit CodeServer <☁️🔨@ixkit.com>",
+  "homepage": "https://github.com/ixkit/code-server#readme",
+  "bugs": {
+    "url": "https://github.com/ixkit/code-server/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ixkit/code-server.git"
+  },
+  "forked":"https://github.com/eclipse-theia/theia-blueprint", 
+  "engines": {
+    "yarn": ">=1.7.0 <2",
+    "node": ">=12.14.1"
+  },
+  "devDependencies": {
+    "@eclipse-dash/nodejs-wrapper": "^0.0.1",
+    "@theia/cli": "1.50.1",
+    "@typescript-eslint/eslint-plugin": "^4.25.0",
+    "@typescript-eslint/eslint-plugin-tslint": "^4.25.0",
+    "@typescript-eslint/parser": "^4.25.0",
+    "eslint": "^7.27.0",
+    "eslint-plugin-deprecation": "1.2.1",
+    "eslint-plugin-import": "^2.23.3",
+    "eslint-plugin-no-null": "^1.0.2",
+    "eslint-plugin-no-unsanitized": "^3.1.5",
+    "eslint-plugin-react": "^7.23.2",
+    "lerna": "^6.0.1",
+    "rimraf": "^2.7.1",
+    "ts-node": "^10.0.0",
+    "type-fest": "^0.20.2",
+    "yargs": "17.2.1"
+  },
+  "pkg-begin": "-------------------------------------- begin",
+  "bin": "applications/browser/lib/backend/main.js",
+  "pkg": {
+    "scripts": [
+      "applications/browser/lib/backend/**/*"  
+    ],
+    "assets": [
+      "applications/browser/lib/frontend/**/*"  
+    ],
+    "outputPath": "dist_bin"
+  },
+  "pkg-end": "--------------------------------------  end",
+  "scripts": {
+    "pkg": "yarn build:extensions &&  yarn browser build  &&  pkg . ",
+    "pkgw": "pkg -t win . ",
+
+    "born": "yarn build:extensions &&  yarn browser build  &&  yarn browser start     --hostname 0.0.0.0 --port 8080",
+    "reborn": "yarn clean && yarn && yarn run:born",
+
+    "clean": "lerna run clean && rimraf node_modules",
+    "build": "yarn build:extensions && yarn build:applications",
+    "build:dev": "yarn build:extensions && yarn build:applications:dev",
+    "build:applications": "yarn build:extensions && lerna run --scope=\"theia-ide*app\" build:prod --concurrency 1",
+    "build:applications:dev": "yarn build:extensions && lerna run --scope=\"theia-ide*app\" build --concurrency 1",
+   
+    "build:extensions": "lerna run --scope=\"theia-ide*ext\" --scope=\"code-server*ext\" build",
+    "download:plugins": "theia download:plugins --rate-limit=15 --parallel=false --ignore-errors",
+    "package:applications": "lerna run --scope=\"theia-ide*app\" package --concurrency 1",
+    "package:applications:preview": "lerna run --scope=\"theia-ide*app\" package:preview --concurrency 1",
+    "package:applications:prod": "lerna run --scope=\"theia-ide*app\" package:prod --concurrency 1",
+    "watch": "lerna run --parallel watch",
+    "test": "lerna run test",
+    "electron": "yarn --cwd applications/electron",
+    "browser": "yarn --cwd applications/browser",
+    "update:theia": "ts-node scripts/update-theia-version.ts",
+    "update:theia:children": "lerna run update:theia -- ",
+    "update:next": "ts-node scripts/update-theia-version.ts next && lerna run update:next",
+    "lint": "eslint --ext js,jsx,ts,tsx scripts && lerna run lint",
+    "lint:fix": "eslint --ext js,jsx,ts,tsx scripts --fix && lerna run lint:fix",
+    "license:check": "npx dash-licenses-wrapper  --configFile=./configs/license-check-config.json",
+    "license:check:review": "npx dash-licenses-wrapper  --configFile=./configs/license-check-config.json --review",
+    "postinstall": "theia-patch"
+  },
+  "theiaPluginsDir": "plugins",
+  "theiaPlugins": {
+    "eclipse-theia.builtin-extension-pack": "https://open-vsx.org/api/eclipse-theia/builtin-extension-pack/1.88.1/file/eclipse-theia.builtin-extension-pack-1.88.1.vsix",
+    "vscjava.vscode-java-pack": "https://open-vsx.org/api/vscjava/vscode-java-pack/0.25.11/file/vscjava.vscode-java-pack-0.25.11.vsix",
+    "vscjava.vscode-java-dependency": "https://open-vsx.org/api/vscjava/vscode-java-dependency/0.21.2/file/vscjava.vscode-java-dependency-0.21.2.vsix"
+  },
+  "theiaPluginsExcludeIds": [
+    "ms-vscode.js-debug-companion",
+    "VisualStudioExptTeam.vscodeintellicode",
+    "vscode.builtin-notebook-renderers",
+    "vscode.extension-editing",
+    "vscode.github",
+    "vscode.github-authentication",
+    "vscode.ipynb",
+    "vscode.microsoft-authentication"
+  ],
+  "workspaces": [
+    "applications/*",
+    "addons/*"
+  ],
+  "wk":[
+    "theia-extensions/*" 
+  ],
+  "resolutions": {
+    "@types/puppeteer": "^5.4.0",
+    "@yarnpkg/parsers": "3.0.0-rc.44",
+    "**/multer": "1.4.4-lts.1",
+    "**/nan": "2.18.0",
+    "**/cpu-features": "0.0.9"
+  }
+}

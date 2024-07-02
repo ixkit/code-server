@@ -1,0 +1,11 @@
+{
+    "Copyright-JS/JSX/TS/TSX/CSS": {
+        "prefix": [
+            "header",
+            "copyright"
+        ],
+        "body": "/********************************************************************************\n * Copyright (C) $CURRENT_YEAR ${YourCompany} and others.\n *\n * This program and the accompanying materials are made available under the\n * terms of the MIT License, which is available in the project root.\n *\n * SPDX-License-Identifier: MIT\n ********************************************************************************/\n\n$0",
+        "description": "Adds the copyright...",
+        "scope": "javascript,javascriptreact,typescript,typescriptreact,css"
+    }
+}
