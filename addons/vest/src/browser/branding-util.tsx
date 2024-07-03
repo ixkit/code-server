@@ -44,7 +44,7 @@ export function renderWhatIs(windowService: WindowService): React.ReactNode {
         <div>
             <u className='li-margin-2x'>
                 <li >
-                The CodeServer☁️🔨 IDE is online editor for cloud server now, purpose is build security and collaboration online working platform.
+                The CodeServer☁️🔨 IDE is online code editor for cloud server now, purpose is build security collaboration platform.
                 </li>
                 <li>
                 The IDE goal is speed up development business application for <span className="gs-main-title">Digital Native Enterprise</span> 🚀. 
@@ -92,14 +92,15 @@ export function renderLand(windowService: WindowService): React.ReactNode {
         <h3 className='gs-section-header'>
             Land
         </h3>
+       
         <div>    
-            The IDE is supprot by the <ExternalBrowserLink text="ixkit Team"
+            The IDE builds on the open source <ExternalBrowserLink text="Eclipse Theia"
+            url="https://github.com/eclipse-theia" windowService={windowService} ></ExternalBrowserLink>. We extend and build more interesting features base the Eclipse-Theia core modules.
+        </div>
+        <div>    
+            The CoderServer supprot by the <ExternalBrowserLink text="ixkit Team"
             url="http://ixkit.com" windowService={windowService} ></ExternalBrowserLink>.
         </div> 
-        <div>    
-            The IDE is based on the open source <ExternalBrowserLink text="Eclipse Theia"
-            url="https://github.com/eclipse-theia" windowService={windowService} ></ExternalBrowserLink>.
-        </div>
     </div>;
 }
 

@@ -1,4 +1,4 @@
-import { IRowItem } from "./widget/Base/RowItem";
+import { IRowItem } from "../widget/Base/RowItem";
 
 export const Mocker={
     putItems(rowItem: IRowItem): IRowItem{

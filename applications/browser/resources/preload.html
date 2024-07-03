@@ -75,30 +75,21 @@
 <body>
     <div class="theia-preload" style="display:relative; ">
         
-            <div class='custom-spinner'>
-                 
-                <div id="spinner-title" style="margin: 0;
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%); 
-                color: aqua;  
-                z-index:99999;"
-
-                style2="margin: 0;
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%); 
-                color: aqua;  
-                z-index:99999;"
-                >
-                
-                <span style="font-weight: bold; font-size: 30px; "> CodeServer ☁️🔨 </span>
-                </div>
-            </div> 
+        <div class='custom-spinner'> 
+            <div id="spinner-title" 
+                style="margin: 0;
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%); 
+                    color: aqua;  
+                    z-index:99999;" 
+            >
+            <span style=" font-weight: bold; font-size: 30px; "> CodeServer ☁️🔨 </span>
+            </div>
+        </div> 
        
-            <canvas id="codeStreamCanvas"  style="margin:0; width:100%;height: 100%; position:absolute;z-index:-1;"/>
+        <canvas id="codeStreamCanvas"  style="margin:0; width:100%;height: 100%; position:absolute;z-index:-1;"/>
     </div>
    
    <script>
@@ -179,8 +170,7 @@ const listenWindowSize = ()=>{
 const fitScren =()=>{
    
     const theCanvas = getAnimateCanvas();
-    if (!theCanvas) return ; 
-    console.log('🚀 try fitScren') 
+    if (!theCanvas) return ;  
 
     const H = window.innerHeight;
     const W = window.innerWidth; 

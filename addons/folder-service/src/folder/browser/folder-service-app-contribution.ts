@@ -14,11 +14,29 @@ import { FoldersDialog } from './folders-dialog';
 import { FolderToolbarService } from '../../ui/browser/folder-toolbar-service';
 import { LateInjector } from '@theia/toolbar/lib/browser/toolbar-interfaces';
 import { FolderHomePageFactory } from '../../ui/browser/folder-home-page';
+import { ShellLayoutRestorer } from '@theia/core/lib/browser/shell/shell-layout-restorer';
 
-
-
-
-function updatePath(path: string, title: string): void {
+@injectable()
+export class MyLayoutHandlder extends ShellLayoutRestorer {
+    // not restore 
+    async restoreLayout(app: FrontendApplication): Promise<boolean> {
+        this.logger.info('>>> Restoring the layout state...');
+        if (1 > 0) {
+            return false;
+        }
+        const serializedLayoutData = await this.storageService.getData<string>(this.storageKey);
+        if (serializedLayoutData === undefined) {
+            this.logger.info('<<< Nothing to restore.');
+            return false;
+        }
+        const layoutData = await this.inflate(serializedLayoutData);
+        await app.shell.setLayoutData(layoutData);
+        this.logger.info('<<< The layout has been successfully restored.');
+        return true;
+    }
+}
+// proguard
+function updateBrowserNavigatePath(path: string, title: string): void {
     
     const nextURL =  window.location.origin + FolderServices.Web.Feature.rootRoute(path) ;
     const nextTitle = title;
@@ -66,40 +84,28 @@ export class FolderServiceAppContribution implements FrontendApplicationContribu
     }
      
     onStart(app: FrontendApplication): MaybePromise<void> {
-        this.logger.info('FolderServiceContribution 🚀');
-        
+        this.logger.debug('FolderServiceContribution 🚀'); 
         this.workspaceService.onWorkspaceChanged(async (x) => {
             this.logger.debug('🔃 onWorkspaceChanged', x );
             const activeFolder = x[0];
+            if (!await this.folderService.validatePremission()) {
+                // TODO rollback
+                return ;
+            }
             this.rebuildBrowserPath(activeFolder);
-
-            this.logger.debug('🧐 try checkPremission', this );
-            this.folderService.checkPremission();
             this.folderService.onLoadWorkspace(x);
-
-
-            this.editorValService.do(); 
-
-           
+ 
+            this.editorValService.do();
             
         });
         
         this.initService(app);
-
-        // if (! this.folderToolbarService){
-        //     this.folderToolbarService = this.lateInjector(FolderToolbarService);
-          
-        // }
-       
-       
     }
     async initializeLayout(app: FrontendApplication):  Promise<void>{
-        this.logger.info('🧐 initializeLayout? ',this);
+        this.logger.info('🧐 initializeLayout? ', this);
 
-        if (1>0){
+        if (1 > 10) {
             await this.showFolderHomePage();
-       
-           // await this.folderToolbarService.setupToolbar();
         }
     }
 
@@ -115,20 +121,20 @@ export class FolderServiceAppContribution implements FrontendApplicationContribu
      */
     onDidInitializeLayout?(app: FrontendApplication): MaybePromise<void>{
         this.logger.info('🧐 onDidInitializeLayout? ',this);
-        //this.folderToolbarService.setupToolbar();
     }
     /*
         do not display accurate full path
     */
-    rebuildBrowserPath(activeFolder: FileStat){
-        if (FolderServiceLib.DEFAULT.trace){
+    rebuildBrowserPath(activeFolder: FileStat): void {
+        if (FolderServiceLib.DEFAULT.trace) {
             return ;
         }
-        const dir = activeFolder.resource.path.name; 
-        updatePath(dir,dir);
+        const dir = activeFolder.resource.path.name;
+        updateBrowserNavigatePath(dir, dir);
     }
-    initService(app: FrontendApplication){
-        this.logger.info('🧐 initService, app? ',app);
+
+    initService(app: FrontendApplication): void {
+        this.logger.info('🧐 initService, app? ', app);
     }
 
     onStart_keep(app: FrontendApplication): MaybePromise<void> {
