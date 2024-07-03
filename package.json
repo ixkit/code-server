@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.1.0",
   "license": "AGPL-3.0",
-  "author": "ixkit CodeServer <☁️🔨@ixkit.com>",
+  "author": "ixkit CodeServer <Artificer@ixkit.com>",
   "homepage": "https://github.com/ixkit/code-server#readme",
   "bugs": {
     "url": "https://github.com/ixkit/code-server/issues"
@@ -51,8 +51,8 @@
     "pkg": "yarn build:extensions &&  yarn browser build  &&  pkg . ",
     "pkgw": "pkg -t win . ",
 
-    "born": "yarn build:extensions &&  yarn browser build  &&  yarn browser start     --hostname 0.0.0.0 --port 8080",
-    "reborn": "yarn clean && yarn && yarn run:born",
+    "born": "yarn build:extensions &&  yarn browser build  &&  yarn browser dev     --hostname 0.0.0.0 --port 8080",
+    "reborn": "yarn clean && yarn && yarn born",
 
     "clean": "lerna run clean && rimraf node_modules",
     "build": "yarn build:extensions && yarn build:applications",

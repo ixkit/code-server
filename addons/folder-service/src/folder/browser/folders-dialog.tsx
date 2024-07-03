@@ -83,7 +83,7 @@ export class FoldersDialog extends BaseDialog implements Reacts.IObserver {
                 {/* <div className='col'>
                     {renderWhatIs(this.windowService)}
                 </div> */}
-                <div className='col'>
+                <div className='col col-fit-width'>
                    {this.renderFolderList()}
                 </div> 
             </div> 

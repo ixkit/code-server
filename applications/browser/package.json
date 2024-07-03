@@ -5,7 +5,7 @@
   "productName": "Code Server",
   "version": "0.1.0",
   "license": "AGPL-3.0",
-  "author": "ixkit CodeServer <Aartificer@ixkit.com>",
+  "author": "ixkit CodeServer <ixkit@ixkit.com>",
   "homepage": "https://github.com/ixkit/code-server#readme",
   "bugs": {
     "url": "https://github.com/ixkit/code-server/issues"

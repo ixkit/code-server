@@ -2,6 +2,7 @@ export interface FolderIntent {
     dir: string;
     file?: string;
     line?: number;
+    keywords?: string;
     extra?:  Object|null|undefined;
 };
 

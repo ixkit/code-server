@@ -75,43 +75,20 @@ export class ServiceApiEndpoint implements BackendApplicationContribution {
         echoSuccess(res, data);
     });
    }
-   decodeFolderHandler(app: Application): void {
 
-    const route = FolderServices.Web.Feature.serveRootRoute();
-    app.get( route, (req, res, next) => {
-        const path = decodeURIComponent( req.path);
-        __debug__(`decodeFolderHandler,route: ${route}, path?` , path); 
-        if (!FolderServices.Web.Feature.isRootRoute(path) ) {
-            next();
-            return ;
-        }
-        const folderName = FolderServices.Web.Feature.parseRootRoute(path); 
-        const cookies = req.cookies; 
-        __debug__(`decodeFolderHandler,cookies? ` , cookies); 
-        if (!cookies || !cookies.folderId){ 
-            __debug__(`⚠️ decodeFolderHandler, cookies no value for folderId! back to root ` ); 
-            res.redirect('/');
-            return ;
-        } 
-        const folderId = cookies.folderId;
-        let intentStr = this.folderBusBackendService.fetchIntent(folderId);
-        intentStr = decodeURIComponent(intentStr);
-        const reqData = JSON.parse(intentStr);
-        const { dir,file,line} = reqData;
-        const nextUrl = `/folder?dir=${dir}&file=${file}&line=${line}&name=${folderName}`;
-        __debug__(`decodeFolderHandler,nextUrl: ${nextUrl} `);
-        //  re-assgin the cookie value
-        //res.setHeader('Set-Cookie', `folderId=${folderId}; Secure; HttpOnly;Max-Age=60`);
-        res.redirect(nextUrl);
-       
-    });
-   }
     /*
         open doc folder then trigger render on web page
-        eg: http://localhost:3030/folder?dir=/workspace/code/src&file=welcome.md&line=12
+        
+        http://127.0.0.1:8080/folder?dir={}&file={}&line=1&keywords={}
 
-        dir=/WorkSpace/zanvil_page
-        file=__manifest__.py
+        paramters:
+        - dir: the folder path, eg:  /a/b/c
+
+        - file: the file want open, eg:  index.html
+
+        - line: the line number that want locate to, eg: 1 
+        
+        - keywords: seek to locate, eg: hello, if the parameter {line} was set then this keywords ignored
         
         http://127.0.0.1:8080/folder?dir=/WorkSpace/zanvil_page&file=__manifest__.py&line=11
         
@@ -119,7 +96,7 @@ export class ServiceApiEndpoint implements BackendApplicationContribution {
         http://127.0.0.1:8080/folder?dirId={}&file={}line={}
 
     */
-   encodeFolderHandler(app: Application): void{
+    encodeFolderHandler(app: Application): void {
         const route = '/folder';
         app.get(route, (req, res) => {
             __debug__(` encodeFolderHandler, route: ${route} `,req.query);
@@ -149,8 +126,41 @@ export class ServiceApiEndpoint implements BackendApplicationContribution {
             __debug__(` encodeFolderHandler,nextUrl: ${nextUrl} `);
             res.redirect(nextUrl);
         });
-    } 
+    }
 
+    // deal with 'refresh' action in web browser
+    decodeFolderHandler(app: Application): void {
+
+        const route = FolderServices.Web.Feature.serveRootRoute();
+        app.get( route, (req, res, next) => {
+            const path = decodeURIComponent( req.path);
+            __debug__(`decodeFolderHandler,route: ${route}, path?` , path); 
+            if (!FolderServices.Web.Feature.isRootRoute(path) ) {
+                next();
+                return ;
+            }
+            const folderName = FolderServices.Web.Feature.parseRootRoute(path); 
+            const cookies = req.cookies; 
+            __debug__(`decodeFolderHandler,cookies? ` , cookies); 
+            if (!cookies || !cookies.folderId){ 
+                __debug__(`⚠️ decodeFolderHandler, cookies no value for folderId! back to root ` ); 
+                res.redirect('/');
+                return ;
+            } 
+            const folderId = cookies.folderId;
+            let intentStr = this.folderBusBackendService.fetchIntent(folderId);
+            intentStr = decodeURIComponent(intentStr);
+            const reqData = JSON.parse(intentStr);
+            const { dir,file,line} = reqData;
+            const nextUrl = `/folder?dir=${dir}&file=${file}&line=${line}&name=${folderName}`;
+            __debug__(`decodeFolderHandler,nextUrl: ${nextUrl} `);
+            //  re-assgin the cookie value
+            //res.setHeader('Set-Cookie', `folderId=${folderId}; Secure; HttpOnly;Max-Age=60`);
+            res.redirect(nextUrl);
+           
+        });
+    }
+    
     /*
     @purpose: serve folders service, post and get, make the ide to be micro services.
     @url:    http://localhost:3030/api/folders

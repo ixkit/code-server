@@ -1,6 +1,6 @@
 ### Code Server ☁️🔨
  
- - The CodeServer☁️🔨 IDE is online editor for cloud server now, purpose is build security and collaboration online working platform.
+ - The CodeServer☁️🔨 IDE is online code editor for cloud server now, purpose is build security and collaboration online working platform.
  - The IDE goal is speed up development business application for Digital Native Enterprise 🚀.
 
   #### install  
@@ -26,7 +26,7 @@
   
 ```
   while code server lauched, open browser naviaget to address:   
-    http://127.0.0.1:8080/folder?dir={}&file={}&line=1
+    http://127.0.0.1:8080/folder?dir={}&file={}&line=1&keywords={}
 
   paramters:
   - dir: the folder path, eg:  /a/b/c
@@ -34,9 +34,11 @@
   - file: the file want open, eg:  index.html
 
   - line: the line number that want locate to, eg: 1 
+  
+  - keywords: seek to locate, eg: hello, if the parameter {line} was set then this keywords ignored 
 
   example:  
-  http://127.0.0.1:8080/folder?dir=/a/b/c&file=index.html&line=1
+  http://127.0.0.1:8080/folder?dir=/a/b/c&file=index.html&line=1&keywords=hello
     
 ### build executeable application
   #### install pkg

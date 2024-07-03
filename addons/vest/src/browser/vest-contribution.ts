@@ -88,3 +88,4 @@ export const  applyFeatures = (bind: interfaces.Bind) => {
     bind(CommandContribution).to(VestCommandContribution);
     bind(MenuContribution).to(VestMenuContribution);
 };
+
