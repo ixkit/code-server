@@ -6,6 +6,9 @@ import { bindViewContribution, FrontendApplicationContribution, WidgetFactory } 
 import '../../src/browser/style/index.css';
 
 export default new ContainerModule(bind => {
+    if (1>0) {
+        return ;
+    }
     bindViewContribution(bind, FolderApiContribution);
     bind(FrontendApplicationContribution).toService(FolderApiContribution);
     bind(FolderApiWidget).toSelf();

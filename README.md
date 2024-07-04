@@ -3,11 +3,11 @@
  - The CodeServer☁️🔨 IDE is online code editor for cloud server now, purpose is build security and collaboration online working platform.
  - The IDE goal is speed up development business application for Digital Native Enterprise 🚀.
 
-  #### install  
+  ## nvm  
 ```
   nvm use  v18.20.2
 ```
-  #### build & start 
+  ## build & start 
 ``` 
   yarn clean 
 
@@ -25,7 +25,10 @@
   yarn reborn // clean -> build -> run
   
 ```
-  while code server lauched, open browser naviaget to address:   
+
+  ## usage & api 
+  #### usage
+  While code server lauched, open browser naviaget to address:   
     http://127.0.0.1:8080/folder?dir={}&file={}&line=1&keywords={}
 
   paramters:
@@ -39,8 +42,33 @@
 
   example:  
   http://127.0.0.1:8080/folder?dir=/a/b/c&file=index.html&line=1&keywords=hello
-    
-### build executeable application
+
+ ### api 
+  feature: add accessable folders via api
+  route: /api/folders
+  method: post
+  body: json format, eg:
+  ```
+  {
+    folders=[{
+      id: ? optional
+      name: 
+      data:
+      path: 
+      items:[
+          {
+            id: ? optional
+            name: 
+            data:
+            path: 
+          }
+      ]
+    }]
+  }
+  ```
+
+
+##  build executeable application
   #### install pkg
 ```
    npm install -g pkg  
@@ -49,7 +77,7 @@
 ```
   yarn pkg
 ```
-### Eclipse Theia IDE Template
+## Eclipse Theia IDE Template
 <details>
 <br/>
 <div id="theia-logo" align="center">

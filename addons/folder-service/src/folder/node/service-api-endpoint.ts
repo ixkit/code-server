@@ -206,15 +206,20 @@ function fillFolderId(list: IFolder[], put2Cache: boolean ): void {
     }
 }
 /*
+feature: add accessable folders via api
+route: /api/folders
+method: post
+body: json format, eg:
+
 {
   folders=[{
-    id: ?
+    id: ? optional
     name: 
     data:
     path: 
     items:[
         {
-          id: ?
+          id: ? optional
           name: 
           data:
           path: 
@@ -222,6 +227,7 @@ function fillFolderId(list: IFolder[], put2Cache: boolean ): void {
     ]
   }]
 }
+
 */ 
 function handleFolderPostRoute(app: Application, context?:{logger:ILogger}): void{
     const foldersRoute = '/api/folders';

@@ -89,12 +89,15 @@ export class FoldersDialog extends BaseDialog implements Reacts.IObserver {
             </div> 
         </div>; 
     }
-
+    private  _fuzzyPath(path: string): string { 
+        return path;
+    }
     protected async shouldOpenNewFolder(row:IRowItem): Promise<boolean> {
+        const path = this._fuzzyPath(row.path);
         const dialog = new ConfirmDialog({
             title: nls.localize('codeserver/openfolder', 'Confirm'),
             msg: nls.localize('codeserver/openfolder/confirm/body',
-                'Do you want to open folder: {0} ? \r\n path: {1}', row.name, row.path),
+                'Do you want to open folder: {0} ? \r\n path: {1}', row.name, path),
             ok: Dialog.YES,
             cancel: Dialog.NO,
         });
